@@ -27,7 +27,7 @@ Author:
 params ["_unit", "_weapon"];
 
 // config case
-private _compatibleMagazines = [_weapon, true] call CBA_fnc_compatibleMagazines;
+private _compatibleMagazines = compatibleMagazines _weapon;
 
 private _uniform = uniformContainer _unit;
 private _uniformMagazines = magazinesAmmoCargo _uniform select {
@@ -55,10 +55,7 @@ if (primaryWeapon _unit == _weapon) then {
 };
 
 if (secondaryWeapon _unit == _weapon) then {
-    // 'removeAllSecondaryWeaponItems' does not exist
-    {
-        _unit removeSecondaryWeaponItem _x;
-    } forEach secondaryWeaponItems _unit;
+    removeAllSecondaryWeaponItems _unit;
 };
 
 if (handgunWeapon _unit == _weapon) then {
