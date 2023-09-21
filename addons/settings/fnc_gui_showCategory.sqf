@@ -29,8 +29,8 @@ if !(_category in (uiNamespace getVariable QGVAR(createdCategories))) then {
     private _settingInfo = (GVAR(allSettingsData) get _setting);
     private _currentValue = GET_TEMP_NAMESPACE_VALUE(_setting,_source);
 
-    private _settingControlsTable = (_display getVariable QGVAR(createdSettings)) get _setting;
-    private _settingControls =  _settingControlsTable ctRowControls 0;
+    private _ctrlSettingGroup = (_display getVariable QGVAR(createdSettings)) get _setting;
+    private _settingControls =  allControls _ctrlSettingGroup;
 
     private _wasEdited = false;
 
@@ -48,51 +48,23 @@ if !(_category in (uiNamespace getVariable QGVAR(createdCategories))) then {
     };
 
     // change color if setting was edited
-    private _ctrlName = _settingControls param [0, controlNull]
+    private _ctrlName = GET_CTRL_NAME(_ctrlSettingGroup);
     if (_wasEdited) then {
-        _ctrlSettingName ctrlSetTextColor COLOR_TEXT_ENABLED_WAS_EDITED;
+        _ctrlName ctrlSetTextColor COLOR_TEXT_ENABLED_WAS_EDITED;
     };
 
     private _defaultValue = _settingInfo get "defaultValue";
     private _settingData = _settingInfo get "settingData";
 
-    // ----- determine display string for default value
-    private _defaultValueTooltip = switch (toUpper _settingType) do {
-        case "LIST": {
-            _settingData params ["_values", "_labels"];
-
-            _labels param [_values find _defaultValue, ""];
-        };
-        case "SLIDER": {
-            if (_settingData param [3, false]) then {
-                format [localize "STR_3DEN_percentageUnit", round (_defaultValue * 100), "%"]
-            } else {
-                _defaultValue
-            };
-        };
-        case "COLOR": {
-            private _template = (["R: %1", "G: %2", "B: %3", "A: %4"] select [0, count _defaultValue]) joinString "\n";
-            format ([_template] + _defaultValue)
-        };
-        case "TIME": {
-            _defaultValue call CBA_fnc_formatElapsedTime
-        };
-        default {_defaultValue};
-    };
-
-    // ----- set tooltip on "Reset to default" button
-    private _ctrlDefault = _settingControls param [1, controlNull];
-    _ctrlDefault ctrlSetTooltip (format ["%1\n%2", localize LSTRING(default_tooltip), _defaultValueTooltip]);
-
     // ----- execute setting script
-    private _script = getText (_rowTemplate >> QGVAR(script));
-    [_settingControlsTable, _setting, _source, _currentValue, _settingData] call (uiNamespace getVariable _script);
+    private _script = getText (configFile >> ctrlClassName _ctrlSettingGroup >> QGVAR(script));
+    [_ctrlSettingGroup, _setting, _source, _currentValue, _settingData] call (uiNamespace getVariable _script);
 
     // ----- default button
-    [_settingControlsTable, _setting, _source, _currentValue, _defaultValue] call FUNC(gui_settingDefault);
+    [_ctrlSettingGroup, _setting, _source, _currentValue, _defaultValue] call FUNC(gui_settingDefault);
 
     // ----- priority list
-    [_settingControlsTable, _setting, _source, _currentPriority, _isGlobal] call FUNC(gui_settingOverwrite);
+    [_ctrlSettingGroup, _setting, _source, _currentPriority, _isGlobal] call FUNC(gui_settingOverwrite);
 
     // ----- check if setting can be altered
     private _enabled = switch (_source) do {
