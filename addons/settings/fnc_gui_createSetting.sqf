@@ -20,7 +20,6 @@ params ["_display", "_setting", "_ctrlOptionsGroup"];
 
 if (_setting in (_display getVariable QGVAR(createdSettings))) exitWith {};
 
-private _source = uiNamespace getVariable QGVAR(source);
 private _settingInfo = (GVAR(allSettingsData) get _setting);
 private _category = _settingInfo get "category";
 private _ctrlOptionsGroup = (_display getVariable QGVAR(createdCategories)) get _category;
@@ -35,16 +34,24 @@ private _rowTemplate = configFile >> QGVAR(Row_Base_Table) >> "RowTemplate" >> _
 private _subCategory = _settingInfo get "subCategory";
 if (_subCategory != "") then {
     private _header = _ctrlOptionsGroup getVariable [format ["%1$%2", QGVAR(header), _x], controlNull];
+    (_header getVariable QGVAR(headerControls)) pushBack _settingControlsTable;
     _settingControlsTable setVariable [QGVAR(header), _header];
 };
 
 _settingControlsTable ctSetRowTemplate _rowTemplate;
 (ctAddRow _settingControlsTable) params ["_ctrlName"];
 
-// Set name and tooltip
 private _displayName = _settingInfo get "displayName";
 private _tooltip = _settingInfo get "tooltip";
 
+// Save setting info in the control for easier searching/export
+_settingControlsTable setVariable [QGVAR(params), _settingInfo];
+_settingControlsTable setVariable [QGVAR(setting), _setting];
+_settingControlsTable setVariable [QGVAR(name), _displayName]
+_settingControlsTable setVariable [QGVAR(tooltip), _tooltip];
+
+
+// Set name and tooltip
 if (_tooltip == "") then {
     _tooltip = _x;
 } else {

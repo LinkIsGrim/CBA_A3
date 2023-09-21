@@ -15,4 +15,15 @@ if (_selectedAddon == "") then {
     _selectedAddon = _ctrlAddonList lbText 0;
 };
 
-[_display, _selectedAddon, _searchString] call FUNC(gui_filterCategory)
+private _addonSettings = GVAR(categorySettings) get _selectedAddon;
+private _createdSettings = _display getVariable QGVAR(createdSettings);
+{
+    private _settingCtrl = _createdSettings get _x;
+    private _settingName = _settingCtrl getVariable QGVAR(name);
+    private _settingTooltip = _settingCtrl getVariable QGVAR(tooltip);
+
+    private _showSetting = _settingName regexMatch _searchString || {_settingTooltip regexMatch _searchString};
+    [_display, _x, _showSetting] call FUNC(gui_showSetting);
+} forEach _addonSettings;
+
+call FUNC(gui_sortMenu);

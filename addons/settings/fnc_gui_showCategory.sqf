@@ -108,3 +108,5 @@ if !(_category in (uiNamespace getVariable QGVAR(createdCategories))) then {
         } forEach _settingControls;
     };
 } forEach (GVAR(settingCategories) get _category);
+
+_display call FUNC(gui_sortMenu);

@@ -14,14 +14,16 @@ Author:
     LinkIsGrim
 ---------------------------------------------------------------------------- */
 
+#define UPDATE_CONTROL_POS(control) _tablePosY = [control, _tablePosY] call FUNC(gui_controlSetTablePos)
+#define HIDE_CONTROL(control) [control, 0, 0] call FUNC(gui_controlSetTablePosY)
+
 params ["_display"];
 
 private _category = uiNamespace getVariable [QGVAR(addon), ""];
 if (_category == "") exitWith {};
 
 private _createdSettings = _display getVariable QGVAR(createdSettings);
-private _subCategories = GVAR(subCategories) get _category;
-private _subCategoryNames = keys _subCategories;
+private _subCategoryNames = keys (GVAR(subCategories) get _category);
 _subCategoryNames sort true;
 
 private _tablePosY = TABLE_LINE_SPACING/2;
@@ -29,26 +31,33 @@ private _tablePosY = TABLE_LINE_SPACING/2;
 // Settings with no headers go first
 {
     private _settingCtrl = _createdSettings get _x;
-    if (!isNull (_settingCtrl getVariable [QGVAR(header), controlNull])) then {continue};
-    private _shown = ctrlShown _settingCtrl;
-    if (_shown) then {
-        _tablePosY = [_settingCtrl, _tablePosY] call FUNC(gui_controlSetTablePosY);
+    if (!isNil {_settingCtrl getVariable QGVAR(header)}) then {continue};
+    if (ctrlShown _settingCtrl) then {
+        UPDATE_CONTROL_POS(_settingCtrl);
     } else {
-        [_settingCtrl, 0, 0] call FUNC(gui_controlSetTablePosY);
+        HIDE_CONTROL(_settingCtrl);
     };
 } forEach (GVAR(categorySettings) get _addon);
 
+
 // Settings with headers afterwards
+private _headers = _subCategoryNames apply {_ctrlOptionsGroup getVariable (format ["%1$%2", QGVAR(header), _x])};
 {
-    private _headerCtrl = _ctrlOptionsGroup getVariable (format ["%1$%2", QGVAR(header), _x]);
-    _tablePosY = [_headerCtrl, _tablePosY] call FUNC(gui_controlSetTablePosY);
+    private _headerControls = _x getVariable QGVAR(headerControls);
+
+    // Hide header if no settings are shown
+    if (_headerControls findIf {ctrlShown _x} == -1) then {
+        _x ctrlShow false;
+        HIDE_CONTROL(_x);
+    } else {
+        _x ctrlShow true;
+        UPDATE_CONTROL_POS(_x);
+    };
     {
-        private _settingCtrl = _createdSettings get _x;
-        private _shown = ctrlShown _settingCtrl;
-        if (_shown) then {
-            _tablePosY = [_settingCtrl, _tablePosY] call FUNC(gui_controlSetTablePosY);
+        if (ctrlShown _x) then {
+            UPDATE_CONTROL_POS(_x);
         } else {
-            [_settingCtrl, 0, 0] call FUNC(gui_controlSetTablePosY);
+            HIDE_CONTROL(_x);
         };
-    } forEach (_subCategories get _x);
-} forEach _subCategoryNames;
+    } forEach _headerControls;
+} forEach _headers;

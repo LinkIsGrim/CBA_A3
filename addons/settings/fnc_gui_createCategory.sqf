@@ -38,6 +38,7 @@ private _subCategories = GVAR(subCategories) get _selectedAddon;
     private _ctrlHeaderName = _ctrlHeaderGroup controlsGroupCtrl IDC_SETTING_NAME;
     _ctrlHeaderName ctrlSetText format ["%1:", _x];
     _ctrlOptionsGroup setVariable [format ["%1$%2", QGVAR(header), _x], _ctrlHeaderGroup];
+    _ctrlHeaderGroup setVariable [QGVAR(headerControls), []];
 } forEach (keys _subCategories);
 
 {
