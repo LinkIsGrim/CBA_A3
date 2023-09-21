@@ -20,7 +20,7 @@ Author:
 
 params ["_display", "_category", "_source"];
 
-if !(_category in (uiNamespace getVariable QGVAR(createdLists))) then {
+if !(_category in (uiNamespace getVariable QGVAR(createdCategories))) then {
     [_display, _category] call FUNC(gui_createCategory);
 };
 
