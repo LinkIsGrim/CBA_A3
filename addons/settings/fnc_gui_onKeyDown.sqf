@@ -7,7 +7,7 @@ private _block = false;
 switch (_key) do {
     case DIK_NUMPADENTER;
     case DIK_RETURN: {
-        if (GVAR(AddonSearchbarFocus)) then {
+        if (_display getVariable QGVAR(AddonSearchbarFocus)) then {
             [_display, _display displayCtrl IDC_ADDONS_SEARCHBAR] call FUNC(gui_handleSearchbar);
             _block = true;
         };

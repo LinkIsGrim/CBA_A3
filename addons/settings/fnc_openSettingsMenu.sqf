@@ -27,10 +27,11 @@ _ctrlConfirm ctrlSetPosition ctrlPosition _ctrlScriptedOK;
 _ctrlConfirm ctrlCommit 0;
 _ctrlConfirm ctrlAddEventHandler ["ButtonClick", {call FUNC(gui_saveTempData)}];
 
-// Add keyDown EH for search bar
-GVAR(AddonSearchbarFocus) = false;
+// Prep variables
+_dlgSettings setVariable [QGVAR(AddonSearchbarFocus), false];
+_dlgSettings setVariable [QGVAR(clientSettingControls), createHashMap];
+_dlgSettings setVariable [QGVAR(missionSettingControls), createHashMap];
+_dlgSettings setVariable [QGVAR(serverSettingControls), createHashMap];
 
+// Add keyDown EH for search bar
 _dlgSettings displayAddEventHandler ["KeyDown", {call FUNC(gui_onKeyDown)}];
-_dlgSettings displayAddEventHandler ["Unload", {
-    GVAR(AddonSearchbarFocus) = nil;
-}];

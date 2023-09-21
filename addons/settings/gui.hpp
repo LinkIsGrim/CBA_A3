@@ -72,8 +72,8 @@ class RscDisplayGameOptions {
                 };
                 class AddonSearch: RscEdit {
                     idc = IDC_ADDONS_SEARCHBAR;
-                    onSetFocus = QUOTE(GVAR(AddonSearchbarFocus) = true);
-                    onKillFocus = QUOTE(GVAR(AddonSearchbarFocus) = false);
+                    onSetFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(AddonSearchbarFocus),true)]);
+                    onKillFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(AddonSearchbarFocus),false)]);
                     x = QUOTE(POS_W(20));
                     y = QUOTE(POS_H(0.8));
                     w = QUOTE(POS_W(15));
@@ -84,7 +84,7 @@ class RscDisplayGameOptions {
                     idc = -1;
                     text = "\a3\Ui_f\data\GUI\RscCommon\RscButtonSearch\search_start_ca.paa";
                     colorBackground[] = {0,0,0,0.4};
-                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParentControlsGroup (_this select 0)) controlsGroupCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_handleSearchbar));
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParent (_this select 0)) displayCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_handleSearchbar));
                     x = QUOTE(POS_W(34.95));
                     y = QUOTE(POS_H(0.72));
                     w = QUOTE(POS_W(1));
