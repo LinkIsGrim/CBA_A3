@@ -17,7 +17,7 @@ if (_selectedAddon == "") then {
 
 private _lastSearchString = _display getVariable [QGVAR(addonSearchString), ""];
 if (_lastSearchString != "" && {_lastSearchString isNotEqualTo _searchString}) then {
-    [_display, _ctrlAddonList] call FUNC(gui_addonList_fillList);
+    [_display, _ctrlAddonList] call FUNC(gui_fillAddonList);
 };
 
 _display setVariable [QGVAR(addonSearchString), _searchString];

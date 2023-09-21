@@ -84,7 +84,7 @@ class RscDisplayGameOptions {
                     idc = -1;
                     text = "\a3\Ui_f\data\GUI\RscCommon\RscButtonSearch\search_start_ca.paa";
                     colorBackground[] = {0,0,0,0.4};
-                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParentControlsGroup (_this select 0)) controlsGroupCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_addonList_handleSearchbar));
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParentControlsGroup (_this select 0)) controlsGroupCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_handleSearchbar));
                     x = QUOTE(POS_W(34.95));
                     y = QUOTE(POS_H(0.72));
                     w = QUOTE(POS_W(1));

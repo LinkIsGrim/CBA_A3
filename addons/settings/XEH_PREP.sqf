@@ -20,8 +20,8 @@ if (hasInterface) then {
     PREP(gui_saveTempData);
     PREP(gui_export);
 
-    PREP(gui_addonList_fillList);
-    PREP(gui_addonList_handleSearchbar);
+    PREP(gui_fillAddonList);
+    PREP(gui_handleSearchbar);
 
     PREP(gui_onKeyDown);
 

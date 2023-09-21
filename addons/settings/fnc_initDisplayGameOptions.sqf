@@ -77,7 +77,7 @@ _ctrlAddonList ctrlAddEventHandler ["LBSelChanged", {_this call FUNC(gui_addonCh
 _display setVariable [QGVAR(lists),[]];
 
 // ----- fill addons list
-[_display, _ctrlAddonList] call FUNC(gui_addonList_fillList);
+[_display, _ctrlAddonList] call FUNC(gui_fillAddonList);
 
 private _listIndex = 0;
 private _lastAddon = uiNamespace getVariable [QGVAR(addon), ""];
