@@ -8,11 +8,10 @@ if (_searchString != "") then {
     _searchString = ".*?" + (_searchString splitString " " joinString ".*?") + ".*?/io";
 };
 
-private _ctrlAddonList = _display displayCtrl IDC_ADDONS_LIST;
-
-private _selectedAddon = _ctrlAddonList lbText lbCurSel _ctrlAddonList;
-if (_selectedAddon == "") then {
-    _selectedAddon = _ctrlAddonList lbText 0;
+private _category = uiNamespace getVariable [QGVAR(addon), ""];
+if (_category == "") then {
+    private _ctrlAddonList = _display displayCtrl IDC_ADDONS_LIST;
+    _category = _ctrlAddonList lbText 0;
 };
 
 private _addonSettings = GVAR(categorySettings) get _selectedAddon;

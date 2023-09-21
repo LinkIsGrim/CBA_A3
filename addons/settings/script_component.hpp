@@ -41,11 +41,17 @@
 
 #define IDC_SETTING_CONTROLS_GROUP 5000
 #define IDC_SETTING_BACKGROUND 5001
+#define GET_CTRL_BACKGROUND(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_BACKGROUND)
 #define IDC_SETTING_NAME 5010
+#define GET_CTRL_NAME(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_NAME)
 #define IDC_SETTING_DEFAULT 5020
+#define GET_CTRL_DEFAULT(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_DEFAULT)
 #define IDC_SETTING_LOCKED 5030
+#define GET_CTRL_LOCKED(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_LOCKED)
 #define IDC_SETTING_OVERWRITE_CLIENT 5040
+#define GET_CTRL_OVERWRITE_CLIENT(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_OVERWRITE_CLIENT)
 #define IDC_SETTING_OVERWRITE_MISSION 5041
+#define GET_CTRL_OVERWRITE_MISSION(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_OVERWRITE_MISSION)
 #define IDC_SETTING_CHECKBOX 5100
 #define IDC_SETTING_EDITBOX 5101
 #define IDC_SETTING_LIST 5110

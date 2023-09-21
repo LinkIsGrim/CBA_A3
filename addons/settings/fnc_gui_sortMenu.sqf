@@ -41,6 +41,7 @@ private _tablePosY = TABLE_LINE_SPACING/2;
 
 
 // Settings with headers afterwards
+private _ctrlOptionsGroup = _display getVariable QGVAR(createdCategories) get _addon;
 private _headers = _subCategoryNames apply {_ctrlOptionsGroup getVariable (format ["%1$%2", QGVAR(header), _x])};
 {
     private _headerControls = _x getVariable QGVAR(headerControls);

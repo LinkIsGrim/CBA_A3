@@ -29,17 +29,17 @@ private _ctrlOptionsGroup = _display ctrlCreate [QGVAR(OptionsGroup), -1, _displ
 (_display getVariable QGVAR(createdCategories)) set [_category, _ctrlOptionsGroup];
 
 private _categorySettings = GVAR(categorySettings) get _selectedAddon;
-private _subCategories = GVAR(subCategories) get _selectedAddon;
+private _subCategoryNames = keys (GVAR(subCategories) get _selectedAddon);
 
 // Create all the headers for sub-categories first
 // Their position will be set later via FUNC(gui_sortMenu)
 {
     private _ctrlHeaderGroup = _display ctrlCreate [QGVAR(subCat), -1, _ctrlOptionsGroup];
-    private _ctrlHeaderName = _ctrlHeaderGroup controlsGroupCtrl IDC_SETTING_NAME;
+    private _ctrlHeaderName = GET_CTRL_NAME(_ctrlHeaderGroup);
     _ctrlHeaderName ctrlSetText format ["%1:", _x];
     _ctrlOptionsGroup setVariable [format ["%1$%2", QGVAR(header), _x], _ctrlHeaderGroup];
     _ctrlHeaderGroup setVariable [QGVAR(headerControls), []];
-} forEach (keys _subCategories);
+} forEach _subCategoryNames;
 
 {
     [_display, _x] call FUNC(gui_createSetting);
