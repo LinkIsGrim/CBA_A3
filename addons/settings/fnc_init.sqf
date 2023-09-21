@@ -75,11 +75,27 @@ if (_category isEqualTo "") exitWith {
     1
 };
 
+if (isLocalized _category) then {
+    _category = localize _category;
+};
+
+if (_subCategory isNotEqualTo "" && {isLocalized _subCategory}) then {
+    _subCategory = localize _subCategory;
+};
+
 // --- setting title and tooltip
 _title params [["_displayName", "", [""]], ["_tooltip", "", [""]]];
 
 if (_displayName isEqualTo "") then {
     _displayName = _setting;
+} else {
+    if (isLocalized _displayName) then {
+        _displayName = localize _displayName;
+    };
+};
+
+if (_tooltip isNotEqualTo "" && {isLocalized _tooltip}) then {
+    _tooltip = localize _tooltip;
 };
 
 // --- who can edit the setting
@@ -120,9 +136,15 @@ switch (toUpper _settingType) do {
             if !(_label isEqualType "") then {
                 _label = str _label;
             };
+            if (isLocalized _label) then {
+                _label = localize _label;
+            };
 
             if !(_tooltip isEqualType "") then {
                 _tooltip = str _tooltip;
+            };
+            if (isLocalized _tooltip) then {
+                _tooltip = localize _tooltip;
             };
 
             _labels set [_forEachIndex, _label];

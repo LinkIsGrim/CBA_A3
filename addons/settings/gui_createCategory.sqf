@@ -26,9 +26,6 @@ private _categorySettings = [];
 {
     (GVAR(default) getVariable _x) params ["", "_setting", "", "", "_category", "", "", "", "", "_subCategory"];
     if (_category == _selectedAddon) then {
-        if (isLocalized _subCategory) then {
-            _subCategory = localize _subCategory;
-        };
         _categorySettings pushBack [_subCategory, _forEachIndex, _setting];
     };
 } forEach GVAR(allSettings);
@@ -47,13 +44,6 @@ private _lastSubCategory = "$START";
 
     (GVAR(default) getVariable _setting) params ["_defaultValue", "", "_settingType", "_settingData", "_category", "_displayName", "_tooltip", "_isGlobal"];
 
-    if (isLocalized _displayName) then {
-        _displayName = localize _displayName;
-    };
-
-    if (isLocalized _tooltip) then {
-        _tooltip = localize _tooltip;
-    };
     if (_tooltip != _setting) then { // Append setting name to bottom line
         if (_tooltip isEqualTo "") then {
             _tooltip = _setting;
@@ -138,13 +128,7 @@ private _lastSubCategory = "$START";
             case "LIST": {
                 _settingData params ["_values", "_labels"];
 
-                private _label = _labels param [_values find _defaultValue, ""];
-
-                if (isLocalized _label) then {
-                    _label = localize _label;
-                };
-
-                _label
+                _labels param [_values find _defaultValue, ""];
             };
             case "SLIDER": {
                 if (_settingData param [3, false]) then {
