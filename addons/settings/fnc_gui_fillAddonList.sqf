@@ -3,9 +3,7 @@
 params ["_display", "_ctrlAddonList"];
 
 if (lbSize _ctrlAddonList > 0) then {
-    for "_i" from (lbSize _ctrlAddonList - 1) to 0 step -1 do {
-        _ctrlAddonList lbDelete _i;
-    };
+    lbClear _ctrlAddonList
 };
 
 private _categories = [];
