@@ -1,4 +1,6 @@
-// inline function, don't include script_component.hpp
+#include "script_component.hpp"
+
+params ["_display", "_selectedAddon"];
 
 private _fnc_controlSetTablePosY = {
     params ["_control", "_tablePosY", "_height"];

@@ -14,6 +14,7 @@ if (hasInterface) then {
     PREP(gui_addonChanged);
     PREP(gui_sourceChanged);
     PREP(gui_configure);
+    PREP(gui_createCategory);
     PREP(gui_refresh);
     PREP(gui_preset);
     PREP(gui_saveTempData);
