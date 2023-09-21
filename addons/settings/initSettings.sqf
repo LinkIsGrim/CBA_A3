@@ -2,6 +2,9 @@
 
 if (isNil QGVAR(default)) then {
     GVAR(allSettings) = [];
+    GVAR(allSettingsData) = createHashMap;
+    GVAR(categorySettings) = createHashMap;
+    GVAR(subCategories) = createHashMap;
     GVAR(default) = [] call CBA_fnc_createNamespace;
 
     // --- main setting sources

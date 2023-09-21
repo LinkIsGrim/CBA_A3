@@ -512,5 +512,11 @@
             <Czech>Ukázat původní hodnoty:</Czech>
             <Korean>기본값 표시:</Korean>
         </Key>
+        <Key ID="STR_cba_settings_ButtonSearchAddon">
+            <English>Search addons</English>
+        </Key>
+        <Key ID="STR_cba_settings_ButtonSearchSetting">
+            <English>Search settings</English>
+        </Key>
     </Package>
 </Project>

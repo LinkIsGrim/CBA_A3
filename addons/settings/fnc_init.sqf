@@ -180,6 +180,23 @@ if (isNil "_defaultValue") exitWith {
 // --- add setting info to settings namespace
 if (isNil {GVAR(default) getVariable _setting}) then {
     GVAR(allSettings) pushBack _setting;
+    private _settingData = createHashMapFromArray [
+        ["setting", _setting],
+        ["defaultValue", _defaultValue],
+        ["settingType", _settingType],
+        ["settingData", _settingData],
+        ["category", _category],
+        ["displayName", _displayName],
+        ["tooltip", _tooltip],
+        ["isGlobal", _isGlobal],
+        ["script", _script],
+        ["subCategory", _subCategory]
+    ];
+    GVAR(allSettingsData) set [_setting, _settingData];
+    (GVAR(categorySettings) getOrDefault [_category, [], true]) pushBack _setting;
+    if (_subCategory isNotEqualTo "") then {
+        ((GVAR(subCategories) getOrDefault [_category, createHashMap, true]) getOrDefault [_subCategory, [], true]) pushBack _setting;
+    };
 };
 
 GVAR(default) setVariable [_setting, [_defaultValue, _setting, _settingType, _settingData, _category, _displayName, _tooltip, _isGlobal, _script, _subCategory]];

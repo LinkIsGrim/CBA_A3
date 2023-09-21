@@ -3,6 +3,7 @@ class RscControlsGroupNoScrollbars;
 class RscText;
 class RscEdit;
 class ctrlButtonPicture;
+class RscButtonSearch;
 
 class RscDisplayGameOptions {
     // pause game in SP while this menu is shown
@@ -49,7 +50,7 @@ class RscDisplayGameOptions {
             x = QUOTE(POS_X(1));
             y = QUOTE(POS_Y(3.1));
             w = QUOTE(POS_W(38));
-            h = QUOTE(POS_H(17.3));
+            h = QUOTE(POS_H(20));
 
             class controls {
                 class Background: RscText {
@@ -70,25 +71,39 @@ class RscDisplayGameOptions {
                     h = QUOTE(POS_H(1));
                     sizeEx = QUOTE(POS_H(1));
                 };
-                class AddonSearch: RscEdit {
+                class SearchAddon: RscEdit {
                     idc = IDC_ADDONS_SEARCHBAR;
-                    onSetFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(AddonSearchbarFocus),true)]);
-                    onKillFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(AddonSearchbarFocus),false)]);
+                    onSetFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(addonSearchbarFocus),true)]);
+                    onKillFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(addonSearchbarFocus),false)]);
                     x = QUOTE(POS_W(20));
                     y = QUOTE(POS_H(0.8));
                     w = QUOTE(POS_W(15));
                     h = QUOTE(POS_H(1));
                     sizeEx = QUOTE(POS_H(1));
                 };
-                class AddonSearchButton: ctrlButtonPicture {
+                class ButtonSearchAddon: RscButtonSearch {
                     idc = -1;
-                    text = "\a3\Ui_f\data\GUI\RscCommon\RscButtonSearch\search_start_ca.paa";
                     colorBackground[] = {0,0,0,0.4};
-                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParent (_this select 0)) displayCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_handleSearchbar));
+                    tooltip = CSTRING(ButtonSearchAddon);
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParent (_this select 0)) displayCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_handleAddonSearchbar));
                     x = QUOTE(POS_W(34.95));
                     y = QUOTE(POS_H(0.72));
                     w = QUOTE(POS_W(1));
                     h = QUOTE(POS_H(1.1));
+                };
+                class SearchSetting: SearchAddon {
+                    idc = IDC_SETTINGS_SEARCHBAR;
+                    onSetFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(settingSearchbarFocus),true)]);
+                    onKillFocus = QUOTE((ctrlParent (_this select 0)) setVariable [ARR_2(QQGVAR(settingSearchbarFocus),false)]);
+                    x = QUOTE(POS_W(12.8));
+                    y = QUOTE(POS_H(17.45));
+                    w = QUOTE(POS_W(11.5));
+                };
+                class ButtonSearchSetting: ButtonSearchAddon {
+                    tooltip = CSTRING(ButtonSearchSetting);
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParent (_this select 0)) displayCtrl IDC_SETTINGS_SEARCHBAR)] call FUNC(gui_handleSettingSearchbar));
+                    x = QUOTE(POS_W(24.25));
+                    y = QUOTE(POS_H(17.4));
                 };
                 class OverwriteClientText: RscText {
                     // Set tooltip per script to avoid it being all upper case.
@@ -106,6 +121,37 @@ class RscDisplayGameOptions {
                     onLoad = QUOTE((_this select 0) ctrlSetText localize QUOTE(LSTRING(overwrite_mission)); (_this select 0) ctrlEnable false;);
                     idc = IDC_TXT_OVERWRITE_MISSION;
                     x = QUOTE(POS_W(33));
+                };
+                class ButtonSave: RscButtonMenu {
+                    idc = IDC_BTN_SAVE;
+                    text = "$STR_DISP_INT_SAVE";
+                    tooltip = CSTRING(ButtonSave_tooltip);
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0),'save')] call FUNC(gui_preset));
+                    x = QUOTE(POS_W(0.5));
+                    y = QUOTE(POS_H(17.4));
+                    w = QUOTE(POS_W(6));
+                    h = QUOTE(POS_H(1));
+                };
+                class ButtonLoad: ButtonSave {
+                    idc = IDC_BTN_LOAD;
+                    text = "$STR_DISP_INT_LOAD";
+                    tooltip = CSTRING(ButtonLoad_tooltip);
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0),'load')] call FUNC(gui_preset));
+                    x = QUOTE(POS_W(6.6));
+                };
+                class ButtonImport: ButtonSave {
+                    idc = IDC_BTN_IMPORT;
+                    text = CSTRING(ButtonImport);
+                    tooltip = CSTRING(ButtonImport_tooltip);
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0),'import')] call FUNC(gui_export));
+                    x = QUOTE(POS_W(25.4));
+                };
+                class ButtonExport: ButtonSave {
+                    idc = IDC_BTN_EXPORT;
+                    text = CSTRING(ButtonExport);
+                    tooltip = CSTRING(ButtonExport_tooltip);
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0),'export')] call FUNC(gui_export));
+                    x = QUOTE(POS_W(31.5));
                 };
             };
         };
@@ -192,6 +238,7 @@ class GVAR(AddonsList): GVAR(RscCombo) {
 
 class RscButton;
 class RscPicture;
+class ctrlXSliderH;
 
 class RscCheckBox;
 class GVAR(CheckboxSound): RscCheckBox {
@@ -199,6 +246,216 @@ class GVAR(CheckboxSound): RscCheckBox {
     soundPush[] = {"\a3\ui_f\data\Sound\RscButtonMenu\soundPush",0.090000004,1};
     soundClick[] = {"\a3\ui_f\data\Sound\RscButtonMenu\soundClick",0.090000004,1};
     soundEscape[] = {"\a3\ui_f\data\Sound\RscButtonMenu\soundEscape",0.090000004,1};
+};
+
+// These are the base control definitions used in the Addon Options menu
+// Offsets are relative to CT_CONTROLS_TABLE columns, see RowTemplate class in GVAR(Row_Base_Table) for actual offsets
+class GVAR(Table_Name): RscText {
+    idc = IDC_SETTING_NAME;
+    style = ST_LEFT;
+    sizeEx = QUOTE(POS_H(1));
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(15.5));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_Default): RscButton {
+    idc = IDC_SETTING_DEFAULT;
+    style = ST_PICTURE;
+    text = ICON_DEFAULT;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(1));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_Locked): RscPicture {
+    idc = IDC_SETTING_LOCKED;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(1));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_OverwriteClients): GVAR(CheckboxSound) {
+    idc = IDC_SETTING_OVERWRITE_CLIENT;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(1));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_OverwriteMission): GVAR(Table_OverwriteClients) {
+    idc = IDC_SETTING_OVERWRITE_MISSION;
+};
+class GVAR(Table_Checkbox): GVAR(CheckboxSound) {
+    GVAR(script) = QFUNC(gui_settingCheckbox);
+    idc = IDC_SETTING_CHECKBOX;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(1));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_Editbox): RscEdit {
+    idc = IDC_SETTING_EDITBOX;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(10.5));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_List): GVAR(RscCombo) {
+    idc = IDC_SETTING_LIST;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(10.5));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_Slider): ctrlXSliderH {
+    idc = IDC_SETTING_SLIDER;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(8.2));
+    h = QUOTE(POS_H(1));
+};
+class GVAR(Table_Slider_Edit): RscEdit {
+    idc = IDC_SETTING_SLIDER_EDIT;
+    x = QUOTE(POS_W(0));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(2.2));
+    h = QUOTE(POS_H(1));
+};
+
+class RscControlsTable;
+class GVAR(Row_Base_Table): RscControlsTable {
+    idc = -1;
+    firstIDC = CONTROLS_TABLE_FIRSTIDC;
+    lastIDC = CONTROLS_TABLE_LASTIDC;
+    GVAR(script) = "";
+    x = QUOTE(POS_W(1));
+    y = QUOTE(POS_H(0));
+    w = QUOTE(POS_W(37));
+    h = QUOTE(POS_H(1) + TABLE_LINE_SPACING);
+    rowHeight = QUOTE(POS_H(1));
+    headerHeight = QUOTE(POS_H(1));
+    lineSpacing = QUOTE(TABLE_LINE_SPACING/2);
+    // Baseline control template, used for inheritance
+    class RowTemplate {
+        GVAR(script) = "";
+        class RowBackground {
+            controlBaseClassPath[] = {"RscText"};
+            columnX = 0;
+            columnW = QUOTE(POS_W(37));
+            controlOffsetY = 0;
+        };
+        class Column1 {
+            controlBaseClassPath[] = {QGVAR(Table_Name)};
+            columnX = 0;
+            columnW = QUOTE(POS_W(15.5));
+            controlOffsetY = 0;
+        };
+        class Column2 {
+            controlBaseClassPath[] = {QGVAR(Table_Default)};
+            columnX = QUOTE(POS_W(27));
+            columnW = QUOTE(POS_W(1));
+            controlOffsetY = 0;
+        };
+        class Column3 {
+            controlBaseClassPath[] = {QGVAR(Table_Locked)};
+            columnX = QUOTE(POS_W(28.5));
+            columnW = QUOTE(POS_W(1));
+            controlOffsetY = 0;
+        };
+        class Column4 {
+            controlBaseClassPath[] = {QGVAR(Table_OverwriteClients)};
+            columnX = QUOTE(POS_W(30.5));
+            columnW = QUOTE(POS_W(1));
+            controlOffsetY = 0;
+        };
+        class Column5 {
+            controlBaseClassPath[] = {QGVAR(Table_OverwriteMission)};
+            columnX = QUOTE(POS_W(33.5));
+            columnW = QUOTE(POS_W(1));
+            controlOffsetY = 0;
+        };
+        class Column6 {
+            controlBaseClassPath[] = {QGVAR(Table_Default)};
+            columnX = QUOTE(POS_W(16));
+            columnW = QUOTE(POS_W(1));
+            controlOffsetY = 0;
+        };
+    };
+
+    // CHECKBOX
+    class Checkbox: RowTemplate {
+        GVAR(script) = QFUNC(gui_settingCheckbox);
+        class Column6 {
+            controlBaseClassPath[] = {QGVAR(Table_Checkbox)};
+            columnW = QUOTE(POS_W(1));
+        };
+    };
+
+    // EDITBOX
+    class EditBox: RowTemplate {
+        GVAR(script) = QFUNC(gui_settingEditbox);
+        class Column6: Column6 {
+            controlBaseClassPath[] = {QGVAR(Table_Editbox)};
+            columnW = QUOTE(POS_W(10.5));
+        };
+    };
+
+    // LIST
+    class List: RowTemplate {
+        GVAR(script) = QFUNC(gui_settingList);
+        class Column6: Column6 {
+            controlBaseClassPath[] = {QGVAR(Table_List)};
+            columnW = QUOTE(POS_W(10.5));
+        };
+    };
+
+    // SLIDER
+    class Slider: RowTemplate {
+        GVAR(script) = QFUNC(gui_settingSlider);
+        class Column6: Column6 {
+            controlBaseClassPath[] = {QGVAR(Table_Slider)};
+            columnW = QUOTE(POS_W(8.2));
+        };
+        class Column7: Column6 {
+            controlBaseClassPath[] = {QGVAR(Table_Slider_Edit)};
+            columnW = QUOTE(POS_W(2.2));
+            columnX = QUOTE(POS_W(8.3));
+        };
+    };
+
+    // COLOR
+    class Color: RowTemplate {
+        GVAR(script) = QFUNC(gui_settingColor);
+    };
+
+    // COLOR w/ Alpha
+    class ColorAlpha: Color {
+    };
+    // TIME
+    class Time: RowTemplate {
+        GVAR(script) = QFUNC(gui_settingTime);
+    };
+
+    class HeaderTemplate {
+        class HeaderBackground {
+            controlBaseClassPath[] = {"RscText"};
+            columnX = 0;
+            columnW = QUOTE(POS_W(37));
+            controlOffsetY = 0;
+        };
+        class Column1 {
+            controlBaseClassPath[] = {QGVAR(Table_Name)};
+            columnX = 0;
+            columnW = QUOTE(POS_W(15.5));
+            controlOffsetY = 0;
+        };
+        class Column2 {
+            controlBaseClassPath[] = {QGVAR(Table_Default)};
+            columnX = QUOTE(POS_W(27));
+            columnW = QUOTE(POS_W(1));
+            controlOffsetY = 0;
+        };
+    };
 };
 
 class GVAR(Row_Empty): RscText {
@@ -352,7 +609,7 @@ class GVAR(Row_List): GVAR(Row_Base) {
     };
 };
 
-class ctrlXSliderH;
+
 
 class GVAR(Row_Slider): GVAR(Row_Base) {
     GVAR(script) = QFUNC(gui_settingSlider);
