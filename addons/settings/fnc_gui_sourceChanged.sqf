@@ -45,9 +45,3 @@ private _enabled = switch (_selectedSource) do {
 
 _ctrlButtonImport ctrlEnable _enabled;
 _ctrlButtonLoad ctrlEnable _enabled;
-
-private _searchString = _display getVariable [QGVAR(addonSearchString), ""];
-
-if (_searchString != "") then {
-    [_display, _selectedAddon, _searchString] call FUNC(gui_filterCategory);
-};

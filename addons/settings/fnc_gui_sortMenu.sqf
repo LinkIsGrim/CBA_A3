@@ -53,7 +53,6 @@ _subCategoryNames sort true;
 private _headers = _subCategoryNames apply {_ctrlOptionsGroup getVariable (format ["%1$%2", QGVAR(header), _x])};
 {
     private _headerControls = _x getVariable QGVAR(headerControls);
-    diag_log str _headerControls;
 
     // Hide header if no settings are shown
     if (_headerControls findIf {ctrlShown _x} == -1) then {
