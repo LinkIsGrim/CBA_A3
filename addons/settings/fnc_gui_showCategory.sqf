@@ -20,11 +20,20 @@ Author:
 
 params ["_display", "_category", "_source"];
 
-if !(_category in (uiNamespace getVariable QGVAR(createdCategories))) then {
+private _createdCategories = _display getVariable QGVAR(createdCategories);
+if !(_category in _createdCategories) then {
     [_display, _category] call FUNC(gui_createCategory);
 };
 
-{ // forEach (GVAR(settingCategories) get _category)
+private _ctrlOptionsGroup = _createdCategories get _category;
+
+{
+    private _enabled = _x == _ctrlOptionsGroup;
+    _x ctrlShow _enabled;
+    _x ctrlEnable _enabled;
+} forEach (values _createdCategories);
+
+{ // forEach (GVAR(categorySettings) get _category)
     private _setting = _x;
     private _settingInfo = (GVAR(allSettingsData) get _setting);
     private _currentValue = GET_TEMP_NAMESPACE_VALUE(_setting,_source);
@@ -79,6 +88,6 @@ if !(_category in (uiNamespace getVariable QGVAR(createdCategories))) then {
             _x ctrlEnable false;
         } forEach _settingControls;
     };
-} forEach (GVAR(settingCategories) get _category);
+} forEach (GVAR(categorySettings) get _category);
 
 _display call FUNC(gui_sortMenu);

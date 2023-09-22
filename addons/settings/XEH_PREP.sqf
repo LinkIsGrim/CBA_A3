@@ -15,6 +15,10 @@ if (hasInterface) then {
     PREP(gui_sourceChanged);
     PREP(gui_configure);
     PREP(gui_createCategory);
+    PREP(gui_createSetting);
+    PREP(gui_showCategory);
+    PREP(gui_showSetting);
+    PREP(gui_sortMenu);
     PREP(gui_refresh);
     PREP(gui_preset);
     PREP(gui_saveTempData);
@@ -22,7 +26,6 @@ if (hasInterface) then {
 
     PREP(gui_controlSetTablePosY);
     PREP(gui_fillAddonList);
-    PREP(gui_filterCategory);
     PREP(gui_getMenuControls);
     PREP(gui_handleAddonSearchbar);
     PREP(gui_handleSettingSearchbar);

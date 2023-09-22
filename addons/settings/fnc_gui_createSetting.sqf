@@ -29,19 +29,19 @@ private _settingType = _settingInfo get "settingType";
 if (_settingType == "COLOR" && {count _defaultValue > 3}) then {
     _settingType = "ColorAlpha";
 };
-private _ctrlSettingGroup = _display ctrlCreate [format ["%1_%2", QGVAR(Row), _settingType], IDC_SETTING_CONTROLS_GROUP, _ctrlOptionsGroup]
+private _ctrlSettingGroup = _display ctrlCreate [format ["%1_%2", QGVAR(Row), _settingType], IDC_SETTING_CONTROLS_GROUP, _ctrlOptionsGroup];
 
 (_display getVariable QGVAR(createdSettings)) set [_setting, _ctrlSettingGroup];
 private _subCategory = _settingInfo get "subCategory";
 if (_subCategory != "") then {
-    private _header = _ctrlOptionsGroup getVariable [format ["%1$%2", QGVAR(header), _x], controlNull];
+    private _header = _ctrlOptionsGroup getVariable [format ["%1$%2", QGVAR(header), _subCategory], controlNull];
     (_header getVariable QGVAR(headerControls)) pushBack _ctrlSettingGroup;
     _ctrlSettingGroup setVariable [QGVAR(header), _header];
 };
 
 private _displayName = _settingInfo get "displayName";
 private _tooltip = _settingInfo get "tooltip";
-private _settingData = _settingInfo get "settingData"
+private _settingData = _settingInfo get "settingData";
 
 // Save setting info in the control for easier searching/export
 _ctrlSettingGroup setVariable [QGVAR(info), _settingInfo];
@@ -57,6 +57,7 @@ if (_tooltip == "") then {
     _tooltip = format ["%1\n%2", _tooltip, _x];
 };
 
+private _ctrlName = GET_CTRL_NAME(_ctrlSettingGroup);
 _ctrlName ctrlSetText format ["%1:", _displayName];
 _ctrlName ctrlSetTooltip _tooltip;
 
