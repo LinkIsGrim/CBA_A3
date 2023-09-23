@@ -38,6 +38,10 @@ call FUNC(gui_refresh);
 (_display displayCtrl IDC_TXT_OVERWRITE_CLIENT) ctrlShow (_source isNotEqualTo "client");
 (_display displayCtrl IDC_TXT_OVERWRITE_MISSION) ctrlShow (_source isEqualTo "server");
 
+{
+    GET_CTRL_OVERWRITE_MISSION(_x) ctrlShow (_source isEqualTo "server");
+} forEach ((_display getVariable QGVAR(categoryControlGroups)) get _category);
+
 // enable / disable IMPORT and LOAD buttons
 private _ctrlButtonImport = _display displayCtrl IDC_BTN_IMPORT;
 private _ctrlButtonLoad = _display displayCtrl IDC_BTN_LOAD;

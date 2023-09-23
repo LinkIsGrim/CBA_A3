@@ -32,6 +32,10 @@ private _ctrlOptionsGroup = _createdCategories get _category;
     _x ctrlEnable _enabled;
 } forEach (values _createdCategories);
 
+{
+    [_display, _x, true] call FUNC(gui_showSetting);
+} forEach (GVAR(categorySettings) get _category);
+
 call FUNC(gui_refresh);
 
 _display call FUNC(gui_sortMenu);

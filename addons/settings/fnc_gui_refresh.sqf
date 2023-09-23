@@ -54,7 +54,9 @@ private _controls = _display getVariable QGVAR(categoryControlGroups) get _addon
         case "server": {CAN_SET_SERVER_SETTINGS && {isNil {GVAR(serverConfig) getVariable _setting}}};
     };
 
-    _x ctrlEnable _enabled;
+    {
+        _x ctrlEnable _enabled;
+    } forEach (allControls _x);
 
     // change color if setting was edited/disabled
     private _ctrlName = GET_CTRL_NAME(_x);
