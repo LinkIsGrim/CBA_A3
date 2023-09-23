@@ -105,7 +105,8 @@ _isGlobal = [0, 1, 2] select _isGlobal;
 private "_defaultValue";
 private _settingData = [];
 
-switch (toUpper _settingType) do {
+_settingType = toUpper _settingType;
+switch (_settingType) do {
     case "CHECKBOX": {
         _defaultValue = _valueInfo param [0, false, [false]]; // don't use params - we want these variables to be private to the main scope
     };

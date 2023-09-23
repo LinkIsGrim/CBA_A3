@@ -63,7 +63,7 @@ _ctrlName ctrlSetTooltip _tooltip;
 
 private _defaultValue = _settingInfo get "defaultValue";
 // Determine display string for default value
-private _defaultValueTooltip = switch (toUpper _settingType) do {
+private _defaultValueTooltip = switch (_settingType) do {
     case "LIST": {
         _settingData params ["_values", "_labels"];
 

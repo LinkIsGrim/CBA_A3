@@ -22,7 +22,7 @@ if (isNil "_value") exitWith {false};
 
 (GVAR(default) getVariable [_setting, []]) params ["_defaultValue", "", ["_settingType", ""], "_settingData"];
 
-switch (toUpper _settingType) do {
+switch (_settingType) do {
     case "CHECKBOX": {
         _value isEqualType false
     };
@@ -42,7 +42,7 @@ switch (toUpper _settingType) do {
     };
     case "TIME": {
         _settingData params ["_min", "_max"];
-        _value isEqualType 0 && {_value >= _min} && {_value <= _max} && {round _value == _value} 
+        _value isEqualType 0 && {_value >= _min} && {_value <= _max} && {round _value == _value}
     };
     default {false};
 };
