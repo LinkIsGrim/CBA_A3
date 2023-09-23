@@ -2,20 +2,22 @@
 
 params ["_controlsGroup", "_setting", "_source", "_currentValue", "_settingData"];
 
-private _ctrlCheckbox = _controlsGroup controlsGroupCtrl IDC_SETTING_CHECKBOX;
-_ctrlCheckbox cbSetChecked _currentValue;
+private _ctrlCheckbox = GET_CTRL_CHECKBOX(_controlsGroup);
 
-_ctrlCheckbox setVariable [QGVAR(params), [_setting, _source]];
 _ctrlCheckbox ctrlAddEventHandler ["CheckedChanged", {
     params ["_ctrlCheckbox", "_state"];
-    (_ctrlCheckbox getVariable QGVAR(params)) params ["_setting", "_source"];
+
+    private _source = uiNamespace getVariable QGVAR(source);
+    if (isNil "_source") exitWith {};
+
+    private _controlsGroup = ctrlParentControlsGroup _ctrlCheckbox;
+    private _setting = _controlsGroup getVariable QGVAR(setting);
 
     private _value = _state == 1;
     SET_TEMP_NAMESPACE_VALUE(_setting,_value,_source);
 
     // if new value is same as default value, grey out the default button
-    private _controlsGroup = ctrlParentControlsGroup _ctrlCheckbox;
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 

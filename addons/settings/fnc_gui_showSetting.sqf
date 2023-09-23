@@ -17,7 +17,7 @@ Author:
 
 params ["_display", "_setting", "_show"];
 
-private _settingCtrl = _display getVariable QGVAR(createdSettings) get _setting;
+private _settingCtrl = _display getVariable QGVAR(settingControlGroups) get _setting;
 
 _settingCtrl ctrlShow _show;
 _settingCtrl ctrlEnable _show;

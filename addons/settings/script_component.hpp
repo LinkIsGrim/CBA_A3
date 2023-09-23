@@ -23,6 +23,8 @@
 #define CONTROLS_TABLE_FIRSTIDC 5000
 #define CONTROLS_TABLE_LASTIDC 6000
 
+#define GET_CTRL_SETTING(control) ((ctrlParentControlsGroup control) getVariable QGVAR(setting))
+
 #define IDC_ADDONS_GROUP 4301
 #define IDC_ADDONS_SEARCHBAR 4311
 #define IDC_ADDONS_LIST 4312
@@ -55,10 +57,15 @@
 #define IDC_SETTING_OVERWRITE_MISSION 5041
 #define GET_CTRL_OVERWRITE_MISSION(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_OVERWRITE_MISSION)
 #define IDC_SETTING_CHECKBOX 5100
+#define GET_CTRL_CHECKBOX(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_CHECKBOX)
 #define IDC_SETTING_EDITBOX 5101
+#define GET_CTRL_EDITBOX(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_EDITBOX)
 #define IDC_SETTING_LIST 5110
+#define GET_CTRL_LIST(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_LIST)
 #define IDC_SETTING_SLIDER 5120
+#define GET_CTRL_SLIDER(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_SLIDER)
 #define IDC_SETTING_SLIDER_EDIT 5121
+#define GET_CTRL_SLIDER_EDIT(controlGroup) (controlGroup controlsGroupCtrl IDC_SETTING_SLIDER_EDIT)
 #define IDC_SETTING_COLOR_PREVIEW 5130
 #define IDC_SETTING_COLOR_RED 5131
 #define IDC_SETTING_COLOR_RED_EDIT 5132

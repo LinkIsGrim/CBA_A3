@@ -25,13 +25,13 @@ if (isNil "_category" || {isNil "_source"}) exitWith {};
 { // forEach (GVAR(categorySettings) get _category)
     private _setting = _x;
     private _settingInfo = (GVAR(allSettingsData) get _setting);
-    private _currentValue = GET_TEMP_NAMESPACE_VALUE(_setting,_source);
 
-    private _ctrlSettingGroup = (_display getVariable QGVAR(createdSettings)) get _setting;
+    private _ctrlSettingGroup = (_display getVariable QGVAR(settingControlGroups)) get _setting;
     private _settingControls = allControls _ctrlSettingGroup;
 
-    private _wasEdited = false;
 
+    private _wasEdited = false;
+    private _currentValue = GET_TEMP_NAMESPACE_VALUE(_setting,_source);
     if (isNil "_currentValue") then {
         _currentValue = [_setting, _source] call FUNC(get);
     } else {
@@ -45,24 +45,29 @@ if (isNil "_category" || {isNil "_source"}) exitWith {};
         _wasEdited = true;
     };
 
-    // change color if setting was edited
-    private _ctrlName = GET_CTRL_NAME(_ctrlSettingGroup);
-    if (_wasEdited) then {
-        _ctrlName ctrlSetTextColor COLOR_TEXT_ENABLED_WAS_EDITED;
+    // Update control value
+    switch (_settingInfo get "settingType") do {
+        case "CHECKBOX": {
+            GET_CTRL_CHECKBOX(_ctrlSettingGroup) cbSetChecked _currentValue;
+        };
+        case "EDITBOX": {
+            GET_CTRL_EDITBOX(_ctrlSettingGroup) ctrlSetText _currentValue;
+        };
+        case "LIST": {
+            GET_CTRL_LIST(_ctrlSettingGroup) lbSetCurSel _currentValue;
+        };
+        case "TIME";
+        case "SLIDER": {
+            GET_CTRL_SLIDER(_ctrlSettingGroup) sliderSetPosition _currentValue;
+        };
+        case "COLOR": {
+            {
+                private _sliderPos = _x;
+                private _xSlider = _ctrlSettingGroup controlsGroupCtrl (IDCS_SETTING_COLOR select _forEachIndex);
+                _xSlider sliderSetPosition _sliderPos;
+            } forEach _currentValue;
+        };
     };
-
-    private _defaultValue = _settingInfo get "defaultValue";
-    private _settingData = _settingInfo get "settingData";
-
-    // ----- execute setting script
-    private _script = getText (configFile >> ctrlClassName _ctrlSettingGroup >> QGVAR(script));
-    [_ctrlSettingGroup, _setting, _source, _currentValue, _settingData] call (uiNamespace getVariable _script);
-
-    // ----- default button
-    [_ctrlSettingGroup, _setting, _source, _currentValue, _defaultValue] call FUNC(gui_settingDefault);
-
-    // ----- priority list
-    [_ctrlSettingGroup, _setting, _source, _currentPriority, _isGlobal] call FUNC(gui_settingOverwrite);
 
     // ----- check if setting can be altered
     private _enabled = switch (_source) do {
@@ -75,6 +80,8 @@ if (isNil "_category" || {isNil "_source"}) exitWith {};
         _x ctrlEnable _enabled;
     } forEach _settingControls;
 
+    // change color if setting was edited/disabled
+    private _ctrlName = GET_CTRL_NAME(_ctrlSettingGroup);
     private _ctrlTextColor = COLOR_TEXT_ENABLED;
     if (_wasEdited) then {
         _ctrlTextColor = COLOR_TEXT_ENABLED_WAS_EDITED;

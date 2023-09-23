@@ -30,7 +30,7 @@ if (_searchString == "") exitWith {
 };
 
 // Micro-optimization, saves memory allocation time in loop
-private _createdSettings = _display getVariable QGVAR(createdSettings);
+private _createdSettings = _display getVariable QGVAR(settingControlGroups);
 private _settingInfo = createHashMap;
 private _displayName = "";
 private _tooltip = "";

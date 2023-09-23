@@ -2,7 +2,7 @@
 
 params ["_controlsGroup", "_setting", "_source", "_currentValue", "_defaultValue"];
 
-private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
 
 _ctrlDefault setVariable [QGVAR(params), [_setting, _source]];
 _ctrlDefault ctrlAddEventHandler ["ButtonClick", {

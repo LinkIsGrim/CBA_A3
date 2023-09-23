@@ -18,7 +18,7 @@ Author:
 
 params ["_display", "_category"];
 
-if (_category in (_display getVariable QGVAR(createdCategories))) exitWith {};
+if (_category in (_display getVariable QGVAR(categoryControlGroups))) exitWith {};
 
 // This is a controls group containing multiple CT_CONTROLS_GROUPs
 // Each setting needs a CT_CONTROLS_GROUP, and each category needs a CT_CONTROLS_GROUP to contain them
@@ -26,7 +26,7 @@ if (_category in (_display getVariable QGVAR(createdCategories))) exitWith {};
 private _ctrlOptionsGroup = _display ctrlCreate [QGVAR(OptionsGroup), IDC_OPTIONS_GROUP, _display displayCtrl IDC_ADDONS_GROUP];
 
 // Cache the options group so we don't build it more than once per display lifetime
-(_display getVariable QGVAR(createdCategories)) set [_category, _ctrlOptionsGroup];
+(_display getVariable QGVAR(categoryControlGroups)) set [_category, _ctrlOptionsGroup];
 
 private _categorySettings = GVAR(categorySettings) get _selectedAddon;
 private _subCategoryNames = keys (GVAR(subCategories) get _selectedAddon);

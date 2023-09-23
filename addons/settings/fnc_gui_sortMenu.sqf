@@ -19,7 +19,7 @@ params ["_display"];
 private _category = uiNamespace getVariable [QGVAR(addon), ""];
 if (_category == "") exitWith {};
 
-private _createdSettings = _display getVariable QGVAR(createdSettings);
+private _createdSettings = _display getVariable QGVAR(settingControlGroups);
 
 private _tablePosY = TABLE_LINE_SPACING/2;
 private _hasHeader = false;
@@ -38,7 +38,7 @@ private _hasHeader = false;
     };
 } forEach (GVAR(categorySettings) get _category);
 
-private _ctrlOptionsGroup = _display getVariable QGVAR(createdCategories) get _category;
+private _ctrlOptionsGroup = _display getVariable QGVAR(categoryControlGroups) get _category;
 if !(_hasHeader) exitWith {
     _ctrlOptionsGroup ctrlSetScrollValues [0, -1];
 };

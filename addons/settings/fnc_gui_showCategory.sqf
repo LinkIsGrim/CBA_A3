@@ -19,7 +19,7 @@ Author:
 
 params ["_display", "_category"];
 
-private _createdCategories = _display getVariable QGVAR(createdCategories);
+private _createdCategories = _display getVariable QGVAR(categoryControlGroups);
 if !(_category in _createdCategories) then {
     [_display, _category] call FUNC(gui_createCategory);
 };

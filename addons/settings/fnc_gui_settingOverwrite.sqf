@@ -2,8 +2,8 @@
 
 params ["_controlsGroup", "_setting", "_source", "_currentPriority", "_isGlobal"];
 
-private _ctrlOverwriteClient = _controlsGroup controlsGroupCtrl IDC_SETTING_OVERWRITE_CLIENT;
-private _ctrlOverwriteMission = _controlsGroup controlsGroupCtrl IDC_SETTING_OVERWRITE_MISSION;
+private _ctrlOverwriteClient = GET_CTRL_OVERWRITE_CLIENT(_controlsGroup);
+private _ctrlOverwriteMission = GET_CTRL_OVERWRITE_MISSION(_controlsGroup);
 
 if (_source isEqualTo "client") then {
     _ctrlOverwriteClient ctrlEnable false;
@@ -24,7 +24,7 @@ _ctrlOverwriteClient ctrlAddEventHandler ["CheckedChanged", {
 _ctrlOverwriteClient setVariable [QFUNC(event), {
     params ["_ctrlOverwriteClient", "_state"];
     private _controlsGroup = ctrlParentControlsGroup _ctrlOverwriteClient;
-    private _ctrlOverwriteMission = _controlsGroup controlsGroupCtrl IDC_SETTING_OVERWRITE_MISSION;
+    private _ctrlOverwriteMission = GET_CTRL_OVERWRITE_MISSION(_controlsGroup);
     private _setting = _controlsGroup getVariable QGVAR(setting);
     private _source = _controlsGroup getVariable QGVAR(source);
 
@@ -55,7 +55,7 @@ _controlsGroup setVariable [QFUNC(auto_check_overwrite), {
 _ctrlOverwriteMission ctrlAddEventHandler ["CheckedChanged", {
     params ["_ctrlOverwriteMission", "_state"];
     private _controlsGroup = ctrlParentControlsGroup _ctrlOverwriteMission;
-    private _ctrlOverwriteClient = _controlsGroup controlsGroupCtrl IDC_SETTING_OVERWRITE_CLIENT;
+    private _ctrlOverwriteClient = GET_CTRL_OVERWRITE_CLIENT(_controlsGroup);
     private _setting = _controlsGroup getVariable QGVAR(setting);
     private _source = _controlsGroup getVariable QGVAR(source);
 

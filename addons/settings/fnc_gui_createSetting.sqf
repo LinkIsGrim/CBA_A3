@@ -18,11 +18,11 @@ Author:
 
 params ["_display", "_setting", "_ctrlOptionsGroup"];
 
-if (_setting in (_display getVariable QGVAR(createdSettings))) exitWith {};
+if (_setting in (_display getVariable QGVAR(settingControlGroups))) exitWith {};
 
 private _settingInfo = (GVAR(allSettingsData) get _setting);
 private _category = _settingInfo get "category";
-private _ctrlOptionsGroup = (_display getVariable QGVAR(createdCategories)) get _category;
+private _ctrlOptionsGroup = (_display getVariable QGVAR(categoryControlGroups)) get _category;
 
 // Create setting control group
 private _settingType = _settingInfo get "settingType";
@@ -31,7 +31,7 @@ if (_settingType == "COLOR" && {count _defaultValue > 3}) then {
 };
 private _ctrlSettingGroup = _display ctrlCreate [format ["%1_%2", QGVAR(Row), _settingType], IDC_SETTING_CONTROLS_GROUP, _ctrlOptionsGroup];
 
-(_display getVariable QGVAR(createdSettings)) set [_setting, _ctrlSettingGroup];
+(_display getVariable QGVAR(settingControlGroups)) set [_setting, _ctrlSettingGroup];
 private _subCategory = _settingInfo get "subCategory";
 if (_subCategory != "") then {
     private _header = _ctrlOptionsGroup getVariable [format ["%1$%2", QGVAR(header), _subCategory], controlNull];
@@ -61,8 +61,8 @@ private _ctrlName = GET_CTRL_NAME(_ctrlSettingGroup);
 _ctrlName ctrlSetText format ["%1:", _displayName];
 _ctrlName ctrlSetTooltip _tooltip;
 
-private _defaultValue = _settingInfo get "defaultValue";
 // Determine display string for default value
+private _defaultValue = _settingInfo get "defaultValue";
 private _defaultValueTooltip = switch (_settingType) do {
     case "LIST": {
         _settingData params ["_values", "_labels"];
@@ -89,3 +89,13 @@ private _defaultValueTooltip = switch (_settingType) do {
 // Set tooltip on "Reset to default" button
 private _ctrlDefault = GET_CTRL_DEFAULT(_ctrlSettingGroup);
 _ctrlDefault ctrlSetTooltip (format ["%1\n%2", LLSTRING(default_tooltip), _defaultValueTooltip]);
+
+// ----- execute setting script
+private _script = getText (configFile >> ctrlClassName _ctrlSettingGroup >> QGVAR(script));
+[_ctrlSettingGroup, _setting, _source, _currentValue, _settingData] call (uiNamespace getVariable _script);
+
+// ----- default button
+[_ctrlSettingGroup, _setting, _source, _currentValue, _defaultValue] call FUNC(gui_settingDefault);
+
+// ----- priority list
+[_ctrlSettingGroup, _setting, _source, _currentPriority, _isGlobal] call FUNC(gui_settingOverwrite);
