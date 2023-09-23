@@ -14,9 +14,6 @@ Author:
     LinkIsGrim
 ---------------------------------------------------------------------------- */
 
-#define UPDATE_CONTROL_POS(control)
-#define HIDE_CONTROL(control) [control, 0, 0] call FUNC(gui_controlSetTablePosY)
-
 params ["_display"];
 
 private _category = uiNamespace getVariable [QGVAR(addon), ""];
