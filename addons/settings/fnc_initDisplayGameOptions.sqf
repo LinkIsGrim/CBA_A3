@@ -74,7 +74,6 @@ private _ctrlAddonList = _display ctrlCreate [QGVAR(AddonsList), IDC_ADDONS_LIST
 _ctrlAddonList ctrlAddEventHandler ["LBSelChanged", {_this call FUNC(gui_addonChanged)}];
 
 // ----- Add lists
-_display setVariable [QGVAR(lists),[]];
 _display setVariable [QGVAR(createdCategories), createHashMap];
 _display setVariable [QGVAR(createdSettings), createHashMap];
 
