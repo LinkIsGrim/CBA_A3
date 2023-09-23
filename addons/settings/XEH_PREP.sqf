@@ -26,7 +26,6 @@ if (hasInterface) then {
 
     PREP(gui_controlSetTablePosY);
     PREP(gui_fillAddonList);
-    PREP(gui_getMenuControls);
     PREP(gui_handleAddonSearchbar);
     PREP(gui_handleSettingSearchbar);
     PREP(gui_updateControlData);
