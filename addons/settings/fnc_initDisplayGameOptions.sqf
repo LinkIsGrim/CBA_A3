@@ -74,6 +74,7 @@ private _ctrlAddonList = _display ctrlCreate [QGVAR(AddonsList), IDC_ADDONS_LIST
 _ctrlAddonList ctrlAddEventHandler ["LBSelChanged", {_this call FUNC(gui_addonChanged)}];
 
 // ----- Add lists
+_display setVariable [QGVAR(categoryOptionGroups), createHashMap];
 _display setVariable [QGVAR(categoryControlGroups), createHashMap];
 _display setVariable [QGVAR(settingControlGroups), createHashMap];
 
@@ -93,7 +94,7 @@ _ctrlAddonList lbSetCurSel _listIndex;
 
 // ----- source buttons (server, mission, client)
 {
-    _x ctrlAddEventHandler ["ButtonClick", FUNC(gui_sourceChanged)];
+    _x ctrlAddEventHandler ["ButtonClick", {_this call FUNC(gui_sourceChanged)}];
 } forEach [_ctrlServerButton, _ctrlMissionButton, _ctrlClientButton];
 
 // ----- configure addons/base button

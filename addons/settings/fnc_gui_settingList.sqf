@@ -26,20 +26,17 @@ private _lbData = [];
 // if the item was changed by command. E.g. by clicking the "Default"-button.
 _ctrlList ctrlSetTooltip "";
 
-_ctrlList lbSetCurSel (_values find _currentValue);
-
-_ctrlList setVariable [QGVAR(params), [_setting, _source, _lbData]];
 _ctrlList ctrlAddEventHandler ["LBSelChanged", {
     EXIT_LOCKED;
     params ["_ctrlList", "_index"];
-    (_ctrlList getVariable QGVAR(params)) params ["_setting", "_source", "_lbData"];
+    private _source = uiNamespace getVariable QGVAR(source);
 
     private _value = _lbData select _index;
     SET_TEMP_NAMESPACE_VALUE(_setting,_value,_source);
 
     // if new value is same as default value, grey out the default button
     private _controlsGroup = ctrlParentControlsGroup _ctrlList;
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
@@ -52,15 +49,16 @@ _ctrlList ctrlAddEventHandler ["LBSelChanged", {
 // set setting ui manually to new value
 _controlsGroup setVariable [QFUNC(updateUI), {
     params ["_controlsGroup", "_value"];
-    (_controlsGroup getVariable QGVAR(params)) params ["_values", "_labels"];
+    private _setting = _controlsGroup getVariable QGVAR(setting);
+    private _values = GVAR(allSettingsData) get _setting get "settingData" select 0;
 
-    private _ctrlList = _controlsGroup controlsGroupCtrl IDC_SETTING_LIST;
+    private _ctrlList = GET_CTRL_LIST(_controlsGroup);
     LOCK;
     _ctrlList lbSetCurSel (_values find _value);
     UNLOCK;
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];

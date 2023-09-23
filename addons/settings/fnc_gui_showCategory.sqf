@@ -19,7 +19,7 @@ Author:
 
 params ["_display", "_category"];
 
-private _createdCategories = _display getVariable QGVAR(categoryControlGroups);
+private _createdCategories = _display getVariable QGVAR(categoryOptionGroups);
 if !(_category in _createdCategories) then {
     [_display, _category] call FUNC(gui_createCategory);
 };
@@ -32,6 +32,6 @@ private _ctrlOptionsGroup = _createdCategories get _category;
     _x ctrlEnable _enabled;
 } forEach (values _createdCategories);
 
-_display call FUNC(gui_updateControlData);
+call FUNC(gui_refresh);
 
 _display call FUNC(gui_sortMenu);

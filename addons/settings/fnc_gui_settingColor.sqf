@@ -36,7 +36,7 @@ for "_index" from 0 to ((count _currentValue max 3 min 4) - 1) do {
         SET_TEMP_NAMESPACE_VALUE(_setting,_currentValue,_source);
 
         // if new value is same as default value, grey out the default button
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+        private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
         private _defaultValue = [_setting, "default"] call FUNC(get);
         _ctrlDefault ctrlEnable (_currentValue isNotEqualTo _defaultValue);
 
@@ -71,7 +71,7 @@ for "_index" from 0 to ((count _currentValue max 3 min 4) - 1) do {
         SET_TEMP_NAMESPACE_VALUE(_setting,_currentValue,_source);
 
         // if new value is same as default value, grey out the default button
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+        private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
         private _defaultValue = [_setting, "default"] call FUNC(get);
         _ctrlDefault ctrlEnable (_currentValue isNotEqualTo _defaultValue);
 
@@ -96,7 +96,7 @@ for "_index" from 0 to ((count _currentValue max 3 min 4) - 1) do {
         _ctrlColorEdit ctrlSetText ([_value, 1, 2] call CBA_fnc_formatNumber);
 
         // if new value is same as default value, grey out the default button
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+        private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
         private _defaultValue = [_setting, "default"] call FUNC(get);
         _ctrlDefault ctrlEnable (_currentValue isNotEqualTo _defaultValue);
     }];
@@ -125,7 +125,7 @@ _controlsGroup setVariable [QFUNC(updateUI), {
 
     _ctrlColorPreview ctrlSetBackgroundColor _color;
 
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];

@@ -2,15 +2,11 @@
 
 params ["_controlsGroup", "_setting", "_source", "_currentValue", "_settingData"];
 
-private _ctrlCheckbox = GET_CTRL_CHECKBOX(_controlsGroup);
-
-_ctrlCheckbox ctrlAddEventHandler ["CheckedChanged", {
+GET_CTRL_CHECKBOX(_controlsGroup) ctrlAddEventHandler ["CheckedChanged", {
     params ["_ctrlCheckbox", "_state"];
 
-    private _source = uiNamespace getVariable QGVAR(source);
-    if (isNil "_source") exitWith {};
-
     private _controlsGroup = ctrlParentControlsGroup _ctrlCheckbox;
+    private _source = uiNamespace getVariable QGVAR(source);
     private _setting = _controlsGroup getVariable QGVAR(setting);
 
     private _value = _state == 1;
@@ -31,11 +27,12 @@ _ctrlCheckbox ctrlAddEventHandler ["CheckedChanged", {
 _controlsGroup setVariable [QFUNC(updateUI), {
     params ["_controlsGroup", "_value"];
 
-    private _ctrlCheckbox = _controlsGroup controlsGroupCtrl IDC_SETTING_CHECKBOX;
+    private _setting = _controlsGroup getVariable QGVAR(setting);
+    private _ctrlCheckbox = GET_CTRL_CHECKBOX(_controlsGroup);
     _ctrlCheckbox cbSetChecked _value;
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];

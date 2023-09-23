@@ -20,9 +20,9 @@ params ["_display", "_setting", "_ctrlOptionsGroup"];
 
 if (_setting in (_display getVariable QGVAR(settingControlGroups))) exitWith {};
 
-private _settingInfo = (GVAR(allSettingsData) get _setting);
+private _settingInfo = GVAR(allSettingsData) get _setting;
 private _category = _settingInfo get "category";
-private _ctrlOptionsGroup = (_display getVariable QGVAR(categoryControlGroups)) get _category;
+private _ctrlOptionsGroup = (_display getVariable QGVAR(categoryOptionGroups)) get _category;
 
 // Create setting control group
 private _settingType = _settingInfo get "settingType";
@@ -30,8 +30,9 @@ if (_settingType == "COLOR" && {count _defaultValue > 3}) then {
     _settingType = "ColorAlpha";
 };
 private _ctrlSettingGroup = _display ctrlCreate [format ["%1_%2", QGVAR(Row), _settingType], IDC_SETTING_CONTROLS_GROUP, _ctrlOptionsGroup];
-
 (_display getVariable QGVAR(settingControlGroups)) set [_setting, _ctrlSettingGroup];
+(_display getVariable QGVAR(categoryControlGroups) getOrDefault [_category, [], true]) pushBack _ctrlSettingGroup;
+
 private _subCategory = _settingInfo get "subCategory";
 if (_subCategory != "") then {
     private _header = _ctrlOptionsGroup getVariable [format ["%1$%2", QGVAR(header), _subCategory], controlNull];
@@ -92,7 +93,7 @@ _ctrlDefault ctrlSetTooltip (format ["%1\n%2", LLSTRING(default_tooltip), _defau
 
 // ----- execute setting script
 private _script = getText (configFile >> ctrlClassName _ctrlSettingGroup >> QGVAR(script));
-[_ctrlSettingGroup, _setting, _source, _currentValue, _settingData] call (uiNamespace getVariable _script);
+[_ctrlSettingGroup, _setting, _source, _currentValue, _settingData] call (currentNamespace getVariable _script);
 
 // ----- default button
 [_ctrlSettingGroup, _setting, _source, _currentValue, _defaultValue] call FUNC(gui_settingDefault);

@@ -24,7 +24,7 @@ _ctrlSlider ctrlAddEventHandler ["SliderPosChanged", {
     SET_TEMP_NAMESPACE_VALUE(_setting,_value,_source);
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
@@ -62,7 +62,7 @@ _ctrlSlider ctrlAddEventHandler ["SliderPosChanged", {
         SET_TEMP_NAMESPACE_VALUE(_setting,_value,_source);
 
         // if new value is same as default value, grey out the default button
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+        private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
         private _defaultValue = [_setting, "default"] call FUNC(get);
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
@@ -87,7 +87,7 @@ _controlsGroup setVariable [QFUNC(updateUI), {
     (_controlsGroup controlsGroupCtrl IDC_SETTING_TIME_SECONDS) ctrlSetText ([floor (_value % 60), 2] call CBA_fnc_formatNumber);
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];

@@ -26,7 +26,7 @@ private _source = ["server", "mission", "client"] param [[IDC_BTN_SERVER, IDC_BT
 
 uiNamespace setVariable [QGVAR(source), _source];
 
-_display call FUNC(gui_updateControlData);
+call FUNC(gui_refresh);
 
 // toggle source buttons
 {

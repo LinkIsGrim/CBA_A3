@@ -18,7 +18,7 @@ Author:
 
 params ["_display", "_category"];
 
-if (_category in (_display getVariable QGVAR(categoryControlGroups))) exitWith {};
+if (_category in (_display getVariable QGVAR(categoryOptionGroups))) exitWith {};
 
 // This is a controls group containing multiple CT_CONTROLS_GROUPs
 // Each setting needs a CT_CONTROLS_GROUP, and each category needs a CT_CONTROLS_GROUP to contain them
@@ -26,10 +26,7 @@ if (_category in (_display getVariable QGVAR(categoryControlGroups))) exitWith {
 private _ctrlOptionsGroup = _display ctrlCreate [QGVAR(OptionsGroup), IDC_OPTIONS_GROUP, _display displayCtrl IDC_ADDONS_GROUP];
 
 // Cache the options group so we don't build it more than once per display lifetime
-(_display getVariable QGVAR(categoryControlGroups)) set [_category, _ctrlOptionsGroup];
-
-private _categorySettings = GVAR(categorySettings) get _selectedAddon;
-private _subCategoryNames = keys (GVAR(subCategories) get _selectedAddon);
+(_display getVariable QGVAR(categoryOptionGroups)) set [_category, _ctrlOptionsGroup];
 
 // Create all the headers for sub-categories first
 // Their position will be set later via FUNC(gui_sortMenu)
@@ -39,8 +36,8 @@ private _subCategoryNames = keys (GVAR(subCategories) get _selectedAddon);
     _ctrlHeaderName ctrlSetText format ["%1:", _x];
     _ctrlOptionsGroup setVariable [format ["%1$%2", QGVAR(header), _x], _ctrlHeaderGroup];
     _ctrlHeaderGroup setVariable [QGVAR(headerControls), []];
-} forEach _subCategoryNames;
+} forEach (keys (GVAR(subCategories) get _category));
 
 {
     [_display, _x] call FUNC(gui_createSetting);
-} forEach _categorySettings;
+} forEach (GVAR(categorySettings) get _category);

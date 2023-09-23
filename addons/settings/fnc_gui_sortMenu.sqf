@@ -38,7 +38,7 @@ private _hasHeader = false;
     };
 } forEach (GVAR(categorySettings) get _category);
 
-private _ctrlOptionsGroup = _display getVariable QGVAR(categoryControlGroups) get _category;
+private _ctrlOptionsGroup = _display getVariable QGVAR(categoryOptionGroups) get _category;
 if !(_hasHeader) exitWith {
     _ctrlOptionsGroup ctrlSetScrollValues [0, -1];
 };

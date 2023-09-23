@@ -5,7 +5,7 @@ _settingData params ["_min", "_max", "_trailingDecimals", "_isPercentage"];
 
 private _range = _max - _min;
 
-private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SETTING_SLIDER;
+private _ctrlSlider = GET_CTRL_SLIDER(_controlsGroup);
 _ctrlSlider sliderSetRange [_min, _max];
 _ctrlSlider sliderSetPosition _currentValue;
 _ctrlSlider sliderSetSpeed [0.05 * _range, 0.1 * _range];
@@ -26,13 +26,13 @@ _ctrlSlider ctrlAddEventHandler ["SliderPosChanged", {
     };
 
     private _controlsGroup = ctrlParentControlsGroup _ctrlSlider;
-    private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl IDC_SETTING_SLIDER_EDIT;
+    private _ctrlSliderEdit = GET_CTRL_SLIDER_EDIT(_controlsGroup);
     _ctrlSliderEdit ctrlSetText _editText;
 
     SET_TEMP_NAMESPACE_VALUE(_setting,_value,_source);
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
@@ -48,7 +48,7 @@ private _editText = if (_isPercentage) then {
     [_currentValue, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
 };
 
-private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl IDC_SETTING_SLIDER_EDIT;
+private _ctrlSliderEdit = GET_CTRL_SLIDER_EDIT(_controlsGroup);
 _ctrlSliderEdit ctrlSetText _editText;
 
 _ctrlSliderEdit setVariable [QGVAR(params), [_setting, _source, _trailingDecimals, _isPercentage]];
@@ -67,7 +67,7 @@ _ctrlSliderEdit ctrlAddEventHandler ["KeyUp", {
     };
 
     private _controlsGroup = ctrlParentControlsGroup _ctrlSliderEdit;
-    private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SETTING_SLIDER;
+    private _ctrlSlider = GET_CTRL_SLIDER(_controlsGroup);
 
     _ctrlSlider sliderSetPosition _value;
     _value = sliderPosition _ctrlSlider;
@@ -75,7 +75,7 @@ _ctrlSliderEdit ctrlAddEventHandler ["KeyUp", {
     SET_TEMP_NAMESPACE_VALUE(_setting,_value,_source);
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
@@ -90,7 +90,7 @@ _ctrlSliderEdit ctrlAddEventHandler ["KillFocus", {
     (_ctrlSliderEdit getVariable QGVAR(params)) params ["_setting", "_source", "_trailingDecimals", "_isPercentage"];
 
     private _controlsGroup = ctrlParentControlsGroup _ctrlSliderEdit;
-    private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SETTING_SLIDER;
+    private _ctrlSlider = GET_CTRL_SLIDER(_controlsGroup);
 
     private _value = sliderPosition _ctrlSlider;
 
@@ -107,7 +107,7 @@ _ctrlSliderEdit ctrlAddEventHandler ["KillFocus", {
     _ctrlSliderEdit ctrlSetText _editText;
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];
@@ -117,8 +117,8 @@ _controlsGroup setVariable [QFUNC(updateUI), {
     params ["_controlsGroup", "_value"];
     (_controlsGroup getVariable QGVAR(params)) params ["_min", "_max", "_trailingDecimals", "_isPercentage"];
 
-    private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SETTING_SLIDER;
-    private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl IDC_SETTING_SLIDER_EDIT;
+    private _ctrlSlider = GET_CTRL_SLIDER(_controlsGroup);
+    private _ctrlSliderEdit = GET_CTRL_SLIDER_EDIT(_controlsGroup);
 
     _ctrlSlider sliderSetPosition _value;
 
@@ -131,7 +131,7 @@ _controlsGroup setVariable [QFUNC(updateUI), {
     _ctrlSliderEdit ctrlSetText _editText;
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];

@@ -32,7 +32,7 @@ _ctrlOverwriteClient setVariable [QFUNC(event), {
 
     _controlsGroup call (_controlsGroup getVariable QFUNC(updateUI_locked));
 
-    private _ctrlSettingName = _controlsGroup controlsGroupCtrl IDC_SETTING_NAME;
+    private _ctrlSettingName = GET_CTRL_NAME(_controlsGroup);
     _ctrlSettingName ctrlSetTextColor COLOR_TEXT_ENABLED_WAS_EDITED;
 }];
 
@@ -48,7 +48,7 @@ _controlsGroup setVariable [QFUNC(auto_check_overwrite), {
         };
     };
 
-    private _ctrlSettingName = _controlsGroup controlsGroupCtrl IDC_SETTING_NAME;
+    private _ctrlSettingName = GET_CTRL_NAME(_controlsGroup);
     _ctrlSettingName ctrlSetTextColor COLOR_TEXT_ENABLED_WAS_EDITED;
 }];
 
@@ -76,7 +76,7 @@ _ctrlOverwriteMission ctrlAddEventHandler ["CheckedChanged", {
 
     _controlsGroup call (_controlsGroup getVariable QFUNC(updateUI_locked));
 
-    private _ctrlSettingName = _controlsGroup controlsGroupCtrl IDC_SETTING_NAME;
+    private _ctrlSettingName = GET_CTRL_NAME(_controlsGroup);
     _ctrlSettingName ctrlSetTextColor COLOR_TEXT_ENABLED_WAS_EDITED;
 }];
 

@@ -33,7 +33,7 @@ _ctrlEditbox ctrlAddEventHandler ["KeyUp", {
 
     // if new value is same as default value, grey out the default button
     private _controlsGroup = ctrlParentControlsGroup _ctrlEditbox;
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
@@ -51,7 +51,7 @@ _controlsGroup setVariable [QFUNC(updateUI), {
     _ctrlEditbox ctrlSetText _value;
 
     // if new value is same as default value, grey out the default button
-    private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_SETTING_DEFAULT;
+    private _ctrlDefault = GET_CTRL_DEFAULT(_controlsGroup);
     private _defaultValue = [_setting, "default"] call FUNC(get);
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];
