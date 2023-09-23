@@ -29,6 +29,7 @@ if (hasInterface) then {
     PREP(gui_getMenuControls);
     PREP(gui_handleAddonSearchbar);
     PREP(gui_handleSettingSearchbar);
+    PREP(gui_updateControlData);
 
     PREP(gui_onKeyDown);
 
