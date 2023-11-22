@@ -153,6 +153,15 @@ class RscDisplayGameOptions {
                     onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0),'export')] call FUNC(gui_export));
                     x = QUOTE(POS_W(31.5));
                 };
+                class VolatileWarningText: OverwriteClientText {
+                    onLoad = QUOTE((_this select 0) ctrlEnable true;);
+                    idc = IDC_TXT_VOLATILE_WARNING;
+                    style = ST_LEFT;
+                    text = CSTRING(volatile);
+                    tooltip = CSTRING(volatile_tooltip);
+                    x = QUOTE(POS_W(1));
+                    w = QUOTE(POS_W(24));
+                };
             };
         };
     };
@@ -921,8 +930,7 @@ class RscDisplayEmpty;
 class GVAR(MainMenuHelper): RscDisplayEmpty {
     onLoad = QUOTE(\
         (_this select 0) call FUNC(openSettingsMenu);\
-        (_this select 0) closeDisplay 0;\
-    );
+        (_this select 0) closeDisplay 0;);
 };
 
 class GVAR(export) {

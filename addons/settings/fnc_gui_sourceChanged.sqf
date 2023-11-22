@@ -37,6 +37,7 @@ call FUNC(gui_refresh);
 
 (_display displayCtrl IDC_TXT_OVERWRITE_CLIENT) ctrlShow (_source isNotEqualTo "client");
 (_display displayCtrl IDC_TXT_OVERWRITE_MISSION) ctrlShow (_source isEqualTo "server");
+(_display displayCtrl IDC_TXT_VOLATILE_WARNING) ctrlShow (_source isEqualTo "server" && GVAR(volatile));
 
 {
     GET_CTRL_OVERWRITE_MISSION(_x) ctrlShow (_source isEqualTo "server");

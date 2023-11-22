@@ -315,6 +315,14 @@
             <Czech>Resetovat na původní hodnotu.</Czech>
             <Korean>기본값으로 초기화합니다.</Korean>
         </Key>
+        <Key ID="STR_cba_settings_volatile">
+            <English>Changes will not persist after server restart</English>
+            <Polish>Zmiany nie zostaną zachowane po restarcie serwera</Polish>
+        </Key>
+        <Key ID="STR_cba_settings_volatile_tooltip">
+            <English>The server is configured to not persist changes to settings between server restarts.\nChanges will persist between mission restarts.</English>
+            <Polish>Serwer jest skonfigurowany tak, aby odrzucać wszystkie zmiany w ustawieniach gdy zostanie zrestartowany.\nZmiany zostaną zachowane między restartami misji.</Polish>
+        </Key>
         <Key ID="STR_cba_settings_overwrite_clients">
             <English>Overwrite\nClients</English>
             <German>Clients\nüberschreiben</German>
@@ -401,7 +409,7 @@
             <Turkish>Oyuncular tarafından bu ayarın üstüne yazılmış.</Turkish>
             <Italian>I client sovrascrivono questa impostazione.</Italian>
             <Czech>Toto nastavení je přepsáno klienty.</Czech>
-            <Korean></Korean>
+            <Korean>이 설정은 클라이언트에 의해 덮어씌워졌습니다.</Korean>
         </Key>
         <Key ID="STR_cba_settings_overwritten_by_mission_tooltip">
             <English>This setting is overwritten by the mission.</English>
@@ -416,7 +424,7 @@
             <Turkish>Görev tarafından bu ayarın üstüne yazılmış.</Turkish>
             <Italian>La missione sovrascrive questa impostazione.</Italian>
             <Czech>Toto nastavení je přepsáno misí.</Czech>
-            <Korean></Korean>
+            <Korean>이 설정은 미션에 의해 덮어씌워졌습니다.</Korean>
         </Key>
         <Key ID="STR_cba_settings_overwritten_by_server_tooltip">
             <English>This setting is overwritten by the server.</English>

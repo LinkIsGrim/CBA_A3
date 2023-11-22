@@ -1,5 +1,6 @@
 //#define DEBUG_MODE_FULL
 //#include "..\..\script_component.hpp"
+#pragma hemtt suppress pw3_padded_arg file
 
 #define _DefaultAspectRatio 3 / 4
 #define _SX (safeZoneX + safeZoneW / 2) //screen centre x
@@ -102,7 +103,7 @@ class CBA_flexiMenu_rscRose {
     };
     //---------------------------------
     class controls {
-        class caption: rscText {
+        class caption: RscText {
             idc = _flexiMenu_IDC_menuDesc;
             //x = QUOTE(_SX - _BW);
             x = QUOTE(_leftButtonLevel1X);

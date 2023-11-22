@@ -1,4 +1,5 @@
 name = "CBA_A3"
+mainprefix = "x"
 prefix = "cba"
 author = "CBATeam"
 
@@ -27,6 +28,7 @@ exclude = [
     "xeh/fnc_initdisplay.sqf",
     "xeh/fnc_startloadingscreen.sqf",
     "xeh/fnc_endloadingscreen.sqf",
+    "/test_"
 ]
 
 [hemtt.config]
