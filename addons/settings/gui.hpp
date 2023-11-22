@@ -85,7 +85,7 @@ class RscDisplayGameOptions {
                     idc = -1;
                     colorBackground[] = {0,0,0,0.4};
                     tooltip = CSTRING(ButtonSearchAddon);
-                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParent (_this select 0)) displayCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_handleAddonSearchbar));
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0),(ctrlParent (_this select 0)) displayCtrl IDC_ADDONS_SEARCHBAR)] call FUNC(gui_handleAddonSearchbar));
                     x = QUOTE(POS_W(34.95));
                     y = QUOTE(POS_H(0.72));
                     w = QUOTE(POS_W(1));
@@ -101,7 +101,7 @@ class RscDisplayGameOptions {
                 };
                 class ButtonSearchSetting: ButtonSearchAddon {
                     tooltip = CSTRING(ButtonSearchSetting);
-                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0), (ctrlParent (_this select 0)) displayCtrl IDC_SETTINGS_SEARCHBAR)] call FUNC(gui_handleSettingSearchbar));
+                    onButtonClick = QUOTE([ARR_2(ctrlParent (_this select 0),(ctrlParent (_this select 0)) displayCtrl IDC_SETTINGS_SEARCHBAR)] call FUNC(gui_handleSettingSearchbar));
                     x = QUOTE(POS_W(24.25));
                     y = QUOTE(POS_H(17.4));
                 };
