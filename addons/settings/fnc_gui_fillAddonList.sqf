@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 
-params ["_display", "_ctrlAddonList", ["_filter", false]];
+params ["_display", "_ctrlAddonList"];
 
 if (lbSize _ctrlAddonList > 0) then {
     lbClear _ctrlAddonList

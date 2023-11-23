@@ -9,11 +9,16 @@
 params ["_control", "_searchPattern"];
 
 private _categories = [];
+private _selectedCategory = uiNamespace getVariable [QGVAR(addon), ""];
 for "_i" from (lbSize _control) - 1 to 0 step - 1 do {
     private _category = _control lbText _i;
 
-    // Early skip if the category title matches
-    if (_category regexMatch _searchPattern) then {
+    // Early skip if the category title matches or this is the currently selected category
+    // Handling for no matches in category settings is in FUNC(gui_handleSettingSearchbar)
+    if (
+        _category == _selectedCategory ||
+        {_category regexMatch _searchPattern}
+    ) then {
         _categories pushBack _category; continue
     };
 
@@ -31,6 +36,7 @@ for "_i" from (lbSize _control) - 1 to 0 step - 1 do {
     } forEach (GVAR(categorySettings) get _category);
 
     if !(_category in _categories) then {
+        diag_log format ["removed category: %1", _category];
         _control lbDelete _i;
     };
 };

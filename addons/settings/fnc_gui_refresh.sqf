@@ -70,3 +70,5 @@ private _controls = _display getVariable QGVAR(categoryControlGroups) get _addon
 
     _ctrlName ctrlSetTextColor _ctrlTextColor;
 } forEach _controls;
+
+[_display, _display displayCtrl IDC_SETTINGS_SEARCHBAR, true] call FUNC(gui_handleSettingSearchbar)

@@ -5,13 +5,7 @@
 #define SETTING_VARIABLE (_settingInfo get "setting")
 #define SETTING_TYPE (_settingInfo get "settingType")
 
-params ["_display", ["_searchString", ""]];
-
-private _searchPattern = ".*?/io";
-if (_searchString != "") then {
-    _searchPattern = _searchString regexReplace ["[.?*+^$[\]\\(){}|-]/gio", "\\$&"]; // escape any user regex characters
-    _searchPattern = ".*?" + (_searchPattern splitString " " joinString ".*?") + ".*?/io";
-};
+params ["_display", "_searchPattern"];
 
 private _category = uiNamespace getVariable QGVAR(addon);
 private _shownSettings = (_display getVariable QGVAR(categoryControlGroups) get _category) select {ctrlShown _x};
@@ -29,3 +23,5 @@ private _shownSettings = (_display getVariable QGVAR(categoryControlGroups) get 
         _shownSettings deleteAt _forEachIndex;
     };
 } forEachReversed _shownSettings;
+
+count _shownSettings == 0
