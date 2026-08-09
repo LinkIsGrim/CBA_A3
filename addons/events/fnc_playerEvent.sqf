@@ -21,7 +21,11 @@ Author:
 ---------------------------------------------------------------------------- */
 SCRIPT(playerEvent);
 
-private _unit = missionNamespace getVariable ["bis_fnc_moduleRemoteControl_unit", player];
+// focusOn covers any use of remoteControl, not just the Zeus module, and is objNull when
+// nothing is being controlled
+private _unit = focusOn;
+_unit = [_unit, player] select (isNull _unit);
+
 private _vehicle = vehicle _unit;
 
 // Unlike CBA_fnc_turretPath, this will return [-1] when player is driver
