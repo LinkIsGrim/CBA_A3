@@ -193,6 +193,12 @@
 #define VOLATILE (missionNamespace getVariable [QGVAR(volatile), false])
 #define IS_VOLATILE (isDedicated && VOLATILE)
 
+// Use UNLOCK_USERCONFIG to decide what the settings menu offers - a client has
+// to know what the server allows. Use IS_UNLOCKED to decide where a value is
+// actually read from or written to, that only ever happens on the server.
+#define UNLOCK_USERCONFIG (missionNamespace getVariable [QGVAR(unlockUserconfig), false])
+#define IS_UNLOCKED (IS_VOLATILE && UNLOCK_USERCONFIG)
+
 // Volatile servers keep their settings in uiNamespace, which lives as long as
 // the process does and never reaches the profile on disk.
 #define GET_LOCAL_SETTINGS_NAMESPACE ([profileNamespace, uiNamespace] select IS_VOLATILE)

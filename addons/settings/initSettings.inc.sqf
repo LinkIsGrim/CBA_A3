@@ -14,9 +14,14 @@ if (isNil QGVAR(default)) then {
 
     if (isServer) then {
         missionNamespace setVariable [QGVAR(server), true call CBA_fnc_createNamespace, true];
-        private _volatile = isDedicated && {(getNumber (configFile >> QGVAR(volatile))) == 1};
-        missionNamespace setVariable [QGVAR(volatile), _volatile, true];
-        if (_volatile) then {WARNING("Server settings changes will be lost upon game restart.")};
+        // 0: off, 1: don't persist server settings, 2: also let settings
+        // defined in the server config file be changed at runtime
+        private _volatileMode = [0, getNumber (configFile >> QGVAR(volatile))] select isDedicated;
+        missionNamespace setVariable [QGVAR(volatile), _volatileMode > 0, true];
+        missionNamespace setVariable [QGVAR(unlockUserconfig), _volatileMode >= 2, true];
+
+        if (_volatileMode > 0) then {WARNING("Server settings changes will be lost upon game restart.")};
+        if (_volatileMode >= 2) then {WARNING("Settings defined in the server config file can be changed at runtime, changes will be lost upon game restart.")};
     };
 
     // --- read userconfig file

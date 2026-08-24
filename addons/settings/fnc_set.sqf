@@ -111,7 +111,7 @@ switch (toLower _source) do {
             GVAR(server) setVariable [_setting, [_value, _priority], true];
 
             if (_store) then {
-                if (!isNil {GVAR(serverConfig) getVariable _setting}) exitWith {
+                if (!IS_UNLOCKED && !isNil {GVAR(serverConfig) getVariable _setting}) exitWith {
                     WARNING_1("Cannot change setting %1 defined in server config file.",_setting);
                 };
 

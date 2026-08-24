@@ -72,6 +72,12 @@ if !(ctrlShown _ctrlAddonsGroup) then {
     //--- change button text
     _ctrlToggleButton ctrlSetText LLSTRING(configureBase);
 
+    //--- an unlocked server warns about more than just the restart. Set once,
+    //--- the config it comes from can't change without a game restart.
+    private _ctrlVolatileWarning = _display displayCtrl IDC_TXT_VOLATILE_WARNING;
+    _ctrlVolatileWarning ctrlSetText localize ([LSTRING(volatile), LSTRING(volatile_unlocked)] select UNLOCK_USERCONFIG);
+    _ctrlVolatileWarning ctrlSetTooltip localize ([LSTRING(volatile_tooltip), LSTRING(volatile_unlocked_tooltip)] select UNLOCK_USERCONFIG);
+
     //--- showing the addons group shows every category built inside it, only the
     //--- selected one may stay. Its own rows are put back once the source is known.
     private _selectedCategory = uiNamespace getVariable [QGVAR(addon), ""];
