@@ -194,11 +194,21 @@ GVAR(categorySettings) = nil;
 GVAR(subCategories) = nil;
 
 // --- read previous setting values from profile
+private _settingsHash = GET_LOCAL_SETTINGS_NAMESPACE getVariable [QGVAR(hash), HASH_NULL];
+private _stored = [_settingsHash, toLower _setting] call CBA_fnc_hashGet;
+
 private _settingInfo = GVAR(userconfig) getVariable _setting;
 
+// The config file normally outranks anything stored, because it is re-read every
+// mission and would revert the stored value anyway. A volatile server that
+// unlocks it turns that around: a runtime change wins until the server restarts
+// and takes the hash with it, leaving the file authoritative again.
+if (IS_UNLOCKED && !isNil "_stored") then {
+    _settingInfo = _stored;
+};
+
 if (isNil "_settingInfo") then {
-    private _settingsHash = GET_LOCAL_SETTINGS_NAMESPACE getVariable [QGVAR(hash), HASH_NULL];
-    _settingInfo = [_settingsHash, toLower _setting] call CBA_fnc_hashGet;
+    _settingInfo = _stored;
 };
 
 if (!isNil "_settingInfo") then {

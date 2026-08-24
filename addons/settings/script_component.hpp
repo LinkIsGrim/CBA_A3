@@ -188,7 +188,21 @@
 #define SET_TEMP_NAMESPACE_VALUE(setting,value,source)       GET_TEMP_NAMESPACE(source) setVariable [setting, [value, GET_TEMP_NAMESPACE_PRIORITY_OR_CURRENT(setting,source)]]; SET_TEMP_NAMESPACE_AWAITING_RESTART(setting)
 #define SET_TEMP_NAMESPACE_PRIORITY(setting,priority,source) GET_TEMP_NAMESPACE(source) setVariable [setting, [GET_TEMP_NAMESPACE_VALUE_OR_CURRENT(setting,source), priority]]; SET_TEMP_NAMESPACE_AWAITING_RESTART(setting)
 
-#define GET_LOCAL_SETTINGS_NAMESPACE (with missionNamespace do {if (isDedicated && {GVAR(volatile)}) then {uiNamespace} else {profileNamespace}})
+// Read defensively: clients never set this themselves, they are handed it by
+// the server as a JIP public variable.
+#define VOLATILE (missionNamespace getVariable [QGVAR(volatile), false])
+#define IS_VOLATILE (isDedicated && VOLATILE)
+
+// Use UNLOCK_USERCONFIG to decide what the settings menu offers - a client has
+// to know what the server allows. Use IS_UNLOCKED to decide where a value is
+// actually read from or written to, that only ever happens on the server.
+#define UNLOCK_USERCONFIG (missionNamespace getVariable [QGVAR(unlockUserconfig), false])
+#define IS_UNLOCKED (IS_VOLATILE && UNLOCK_USERCONFIG)
+
+// Volatile servers keep their settings in uiNamespace, which lives as long as
+// the process does and never reaches the profile on disk.
+#define GET_LOCAL_SETTINGS_NAMESPACE ([profileNamespace, uiNamespace] select IS_VOLATILE)
+#define SAVE_LOCAL_SETTINGS if !IS_VOLATILE then {saveProfileNamespace}
 
 #define TEMP_PRIORITY(setting) (call {private _arr = [\
     (uiNamespace getVariable QGVAR(clientTemp))  getVariable [setting, [nil, [setting,  "client"] call FUNC(priority)]] select 1,\

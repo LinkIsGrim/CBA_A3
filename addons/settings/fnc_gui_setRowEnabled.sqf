@@ -38,7 +38,7 @@ private _isLocalOnly = ROW_IS_LOCAL_ONLY(_controlsGroup);
 private _enabled = switch (_source) do {
     case "client": {CAN_SET_CLIENT_SETTINGS && {isNil {GVAR(userconfig) getVariable _setting}}};
     case "mission": {CAN_SET_MISSION_SETTINGS && !_isLocalOnly && {isNil {GVAR(missionConfig) getVariable _setting}}};
-    case "server": {CAN_SET_SERVER_SETTINGS && {isNil {GVAR(serverConfig) getVariable _setting}}};
+    case "server": {CAN_SET_SERVER_SETTINGS && {UNLOCK_USERCONFIG || isNil {GVAR(serverConfig) getVariable _setting}}};
     default {false};
 };
 

@@ -126,11 +126,10 @@ class RscDisplayGameOptions {
                     x = QUOTE(POS_W(COL_OVERWRITE_MISSION + ROW_X - 0.7));
                 };
                 class VolatileWarningText: OverwriteClientText {
-                    onLoad = QUOTE((_this select 0) ctrlEnable true;);
+                    onLoad = QUOTE((_this select 0) ctrlSetTooltip localize QUOTE(LSTRING(volatile_tooltip)); (_this select 0) ctrlEnable true;);
                     idc = IDC_TXT_VOLATILE_WARNING;
                     style = ST_LEFT;
                     text = CSTRING(volatile);
-                    tooltip = CSTRING(volatile_tooltip);
                     x = QUOTE(POS_W(1));
                     y = QUOTE(POS_H(1.85));
                     w = QUOTE(POS_W(22));

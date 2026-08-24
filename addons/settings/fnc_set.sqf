@@ -62,7 +62,7 @@ switch (toLower _source) do {
             private _defaultValue = [_setting, "default"] call FUNC(get);
             private _defaultPriority = SANITIZE_PRIORITY(_setting,0,_source);
 
-            private _settingsHash = profileNamespace getVariable [QGVAR(hash), HASH_NULL];
+            private _settingsHash = GET_LOCAL_SETTINGS_NAMESPACE getVariable [QGVAR(hash), HASH_NULL];
 
             if ([_value, _priority] isEqualTo [_defaultValue, _defaultPriority]) then {
                 [_settingsHash, toLower _setting] call CBA_fnc_hashRem;
@@ -70,8 +70,8 @@ switch (toLower _source) do {
                 [_settingsHash, toLower _setting, [_value, _priority]] call CBA_fnc_hashSet;
             };
 
-            profileNamespace setVariable [QGVAR(hash), _settingsHash];
-            saveProfileNamespace;
+            GET_LOCAL_SETTINGS_NAMESPACE setVariable [QGVAR(hash), _settingsHash];
+            SAVE_LOCAL_SETTINGS;
         };
 
         [QGVAR(refreshSetting), _setting] call CBA_fnc_localEvent;
@@ -111,7 +111,7 @@ switch (toLower _source) do {
             GVAR(server) setVariable [_setting, [_value, _priority], true];
 
             if (_store) then {
-                if (!isNil {GVAR(serverConfig) getVariable _setting}) exitWith {
+                if (!IS_UNLOCKED && !isNil {GVAR(serverConfig) getVariable _setting}) exitWith {
                     WARNING_1("Cannot change setting %1 defined in server config file.",_setting);
                 };
 
@@ -127,7 +127,7 @@ switch (toLower _source) do {
                 };
 
                 GET_LOCAL_SETTINGS_NAMESPACE setVariable [QGVAR(hash), _settingsHash];
-                saveProfileNamespace;
+                SAVE_LOCAL_SETTINGS;
             };
 
             [QGVAR(refreshSetting), _setting] call CBA_fnc_globalEvent;

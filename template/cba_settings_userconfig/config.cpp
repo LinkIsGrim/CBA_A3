@@ -15,3 +15,7 @@ class CfgPatches {
 
 // Uncommenting this will make any changes to "Server" settings be lost upon game restart, applies only to dedicated servers
 // cba_settings_volatile = 1;
+
+// Same as above, but settings defined in this file can also be changed at runtime.
+// The file takes them back over when the server restarts.
+// cba_settings_volatile = 2;

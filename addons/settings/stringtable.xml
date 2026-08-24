@@ -637,5 +637,11 @@
             <Korean>서버가 다시 시작될 때까지 설정 변경 사항이 유지되지 않도록 서버가 구성어 있습니다.\n임무가 다시 시작될 때까지 변경 사항이 유지됩니다.</Korean>
             <Japanese>このサーバーは、サーバーの再起動後に設定への変更が保持されないように構成されています。\n再起動無くミッションを再スタートする場合では変更は保持されます。</Japanese>
         </Key>
+        <Key ID="STR_cba_settings_volatile_unlocked">
+            <English>Changes, including to settings from the server config file, will not persist after server restart</English>
+        </Key>
+        <Key ID="STR_cba_settings_volatile_unlocked_tooltip">
+            <English>The server is configured to not persist changes to settings between server restarts.\nChanges will persist between mission restarts.\nSettings defined in the server config file can be changed here, but the file takes them back over when the server restarts.</English>
+        </Key>
     </Package>
 </Project>
