@@ -78,7 +78,7 @@ switch (toLower _source) do {
         if (!isServer) exitWith {};
 
         GET_LOCAL_SETTINGS_NAMESPACE setVariable [QGVAR(hash), HASH_NULL];
-        saveProfileNamespace;
+        SAVE_LOCAL_SETTINGS;
         GVAR(client) call CBA_fnc_deleteNamespace;
         GVAR(client) = [] call CBA_fnc_createNamespace;
         GVAR(server) call CBA_fnc_deleteNamespace;

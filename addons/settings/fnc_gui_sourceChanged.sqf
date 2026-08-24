@@ -22,7 +22,7 @@ uiNamespace setVariable [QGVAR(source), _selectedSource];
 
 (_display displayCtrl IDC_TXT_OVERWRITE_CLIENT) ctrlShow (_selectedSource isNotEqualTo "client");
 (_display displayCtrl IDC_TXT_OVERWRITE_MISSION) ctrlShow (_selectedSource isEqualTo "server");
-(_display displayCtrl IDC_TXT_VOLATILE_WARNING) ctrlShow (_selectedSource isEqualTo "server" && GVAR(volatile));
+(_display displayCtrl IDC_TXT_VOLATILE_WARNING) ctrlShow (_selectedSource isEqualTo "server" && VOLATILE);
 
 // enable / disable IMPORT and LOAD buttons
 private _ctrlButtonImport = _display displayCtrl IDC_BTN_IMPORT;
