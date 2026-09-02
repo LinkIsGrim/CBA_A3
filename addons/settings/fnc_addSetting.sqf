@@ -12,7 +12,7 @@ Parameters:
     _category    - Category for the settings menu + optional sub-category <STRING, ARRAY>
     _valueInfo   - Extra properties of the setting depending of _settingType. See examples below (optional) <ANY>
     _isGlobal    - 1: all clients share the same setting, 2: setting can't be overwritten (optional, default: 0) <BOOL, NUMBER>
-    _script      - Script to execute when setting is changed. (optional) <CODE>
+    _script      - Script to execute when setting is changed (_this contains value, _thisSetting contains name). (optional) <CODE>
     _needRestart - Setting will be marked as needing mission restart after being changed. (optional, default false) <BOOL>
 
 Returns:
